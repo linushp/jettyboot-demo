@@ -3,7 +3,7 @@ package cn.ubibi.jettyboot.demotest.dao;
 import cn.ubibi.jettyboot.demotest.dao.base.MyDAO;
 import cn.ubibi.jettyboot.demotest.entity.UserEntity;
 import cn.ubibi.jettyboot.framework.commons.StringUtils;
-import cn.ubibi.jettyboot.framework.commons.JBPage;
+import cn.ubibi.jettyboot.framework.commons.model.Page;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +40,7 @@ public class UserDAO extends MyDAO<UserEntity> {
     }
 
 
-    public JBPage<UserEntity> findPageByName(int pageNo, int pageSize, String name) throws Exception {
+    public Page<UserEntity> findPageByName(int pageNo, int pageSize, String name) throws Exception {
         return findPage(pageNo, pageSize, "where name = ?", "order by id desc", name);
     }
 

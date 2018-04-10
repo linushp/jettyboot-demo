@@ -5,8 +5,8 @@ import cn.ubibi.jettyboot.demotest.controller.UserController;
 import cn.ubibi.jettyboot.demotest.dao.UserDAO;
 import cn.ubibi.jettyboot.demotest.dao.base.MyConnectionFactory;
 import cn.ubibi.jettyboot.demotest.servlets.HelloServlet;
-import cn.ubibi.jettyboot.framework.rest.ifs.JBRequestAspect;
-import cn.ubibi.jettyboot.framework.rest.JBRequest;
+import cn.ubibi.jettyboot.framework.rest.ifs.RequestAspect;
+import cn.ubibi.jettyboot.framework.rest.Request;
 import cn.ubibi.jettyboot.framework.rest.JBContextHandler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.log.Log;
@@ -27,44 +27,23 @@ public class MainServer {
         MyConnectionFactory connectionFactory = MyConnectionFactory.getInstance();
         connectionFactory.init();
 
-//        JBDataAccessObject ;
-//        dataAccess;
-//        JBDataUtils;
-//        JBConnectionGetter;
-//        JBUpdateResult;
-//
-//        JBContextHandler;
-//        JBRequest;
-//        JBRequestBody;
-//        JBRequestParams;
-//
-//        JBTextRender;
-//        JBViewRender;
-//        JBControllerHandler;
-//
-//        JBGetMapping;
-//        JBPostMapping;
-//        JBRequestMapping;
-
-
 
         JBContextHandler context = new JBContextHandler("/api");
-
         context.addService(new UserDAO());
-
-
-
-
         context.addController("/user",new UserController());
         context.addServlet("/hello*",new HelloServlet());
 
-        context.addRequestAspect(new JBRequestAspect() {
+        context.addRequestAspect(new RequestAspect() {
 
-            public void invokeBefore(Method method, JBRequest JBRequest) throws Exception {
+            public void invokeBefore(Method method, Request request) throws Exception {
                 System.out.println(method.getName());
+                String token  = request.getCookieValue("token");
+                if (token==null || token.isEmpty()){
+//                    throw new NotLoginException();
+                }
             }
 
-            public void invokeAfter(Method method, JBRequest JBRequest, Object invokeResult) throws Exception {
+            public void invokeAfter(Method method, Request JBRequest, Object invokeResult) throws Exception {
                 System.out.println(method.getName());
             }
 
@@ -73,22 +52,6 @@ public class MainServer {
 
 
         context.addExceptionHandler(new MyExceptionHandler());
-
-
-
-//
-//        DefaultSessionIdManager idManager = new DefaultSessionIdManager(server);
-//        server.setSessionIdManager(idManager);
-//
-//
-//        SessionHandler sessions = new SessionHandler();
-//        sessions.setHandler(restHandler);
-//
-//
-//        ContextHandler context = new ContextHandler("/api");
-//        context.setHandler(restHandler);
-
-
 
 
         Server server = new Server(8001);
@@ -102,5 +65,22 @@ public class MainServer {
 
     }
 
+
+//
+//    public static void main2(){
+//
+//        JettyBootServer server = new JettyBootServer();
+//
+//
+//        server.addService(new UserDAO());
+//        server.addService(new UserService());
+//
+//        server.addExceptionHandler(new MyExceptionHandler());
+//        server.addController("/user", new UserController());
+//
+//
+//        server.listen(8001);
+//
+//    }
 
 }

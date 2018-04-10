@@ -1,16 +1,16 @@
 package cn.ubibi.jettyboot.demotest.controller.parser;
 
-import cn.ubibi.jettyboot.framework.rest.ifs.JBRequestParser;
-import cn.ubibi.jettyboot.framework.rest.JBRequest;
+import cn.ubibi.jettyboot.framework.rest.ifs.RequestParser;
+import cn.ubibi.jettyboot.framework.rest.Request;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class CurrentUser implements JBRequestParser {
+public class CurrentUser implements RequestParser {
 
     private String name;
 
     @Override
-    public void doParse(JBRequest jettyBootJBRequest, HttpServletRequest request, String path) throws Exception {
+    public void doParse(Request jettyBootJBRequest, HttpServletRequest request, String path) throws Exception {
         this.name = jettyBootJBRequest.getCookieValue("name");
         if(this.name == null){
             throw new Exception("NotLogin");

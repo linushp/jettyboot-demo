@@ -1,14 +1,14 @@
 package cn.ubibi.jettyboot.demotest.dao.base;
 
-import cn.ubibi.jettyboot.framework.jdbc.JBDataAccess;
-import cn.ubibi.jettyboot.framework.jdbc.JBDataUtils;
-import cn.ubibi.jettyboot.framework.jdbc.JBConnectionFactory;
+import cn.ubibi.jettyboot.framework.jdbc.DataAccess;
+import cn.ubibi.jettyboot.framework.jdbc.DBUtils;
+import cn.ubibi.jettyboot.framework.jdbc.ConnectionFactory;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class MyConnectionFactory implements JBConnectionFactory {
+public class MyConnectionFactory implements ConnectionFactory {
 
     private static MyConnectionFactory ourInstance = new MyConnectionFactory();
 
@@ -25,11 +25,11 @@ public class MyConnectionFactory implements JBConnectionFactory {
 
 
     public void init(){
-        this.dataSource = JBDataUtils.createComboPooledDataSource("c3p0.properties");
+        this.dataSource = DBUtils.createComboPooledDataSource("c3p0.properties");
         try {
             Connection conn = this.dataSource.getConnection();
-            JBDataAccess jbDataAccess = JBDataAccess.use(conn);
-            jbDataAccess.query("SELECT now()");
+            DataAccess dataAccess = DataAccess.use(conn);
+            dataAccess.query("SELECT now()");
         } catch (Exception e) {
             e.printStackTrace();
         }

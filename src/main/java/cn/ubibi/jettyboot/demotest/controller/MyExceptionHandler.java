@@ -1,15 +1,16 @@
 package cn.ubibi.jettyboot.demotest.controller;
 
-import cn.ubibi.jettyboot.framework.rest.ifs.JBExceptionHandler;
+import cn.ubibi.jettyboot.framework.rest.ifs.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class MyExceptionHandler implements JBExceptionHandler {
+public class MyExceptionHandler implements ExceptionHandler {
 
     @Override
     public boolean handle(Exception e, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
 
         if("NotLogin11".equals(e.getMessage())){
             response.getWriter().println("User is Not Login ");
