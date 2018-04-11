@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.ubibi.jettyboot.framework.rest.annotation.AspectVariable;
 import cn.ubibi.jettyboot.framework.rest.annotation.GetMapping;
 import cn.ubibi.jettyboot.framework.rest.annotation.PostMapping;
 import cn.ubibi.jettyboot.framework.rest.annotation.RequestParams;
@@ -35,7 +36,7 @@ public class UserController {
 
 
     @GetMapping("/test_insert")
-    public UpdateResult getmm21(@RequestParams UserInfoParser reqParser, Request JBRequest) throws Exception {
+    public UpdateResult getmm21(@RequestParams UserInfoParser reqParser, @AspectVariable CurrentUser currentUser) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("name","name" + System.currentTimeMillis() + "_" + Math.random());
         map.put("yaoli",123);
@@ -51,7 +52,7 @@ public class UserController {
 
 
     @GetMapping( "/test")
-    public String getmm(UserInfoParser reqParser, Request JBRequest, CurrentUser currentUser) throws Exception {
+    public String getmm(UserInfoParser reqParser, Request request, CurrentUser currentUser) throws Exception {
         new UserDAO().findAll();
         if(reqParser instanceof RequestParser){
             System.out.println("111");
@@ -120,7 +121,7 @@ public class UserController {
 
 
     @PostMapping("/new/:uid")
-    public String getUserById2(Request JBRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public String getUserById2(Request request) throws IOException, ServletException {
         String aaa = request.getContextPath();
         return "123saaa";
     }

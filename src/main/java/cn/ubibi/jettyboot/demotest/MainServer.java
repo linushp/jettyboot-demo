@@ -43,7 +43,7 @@ public class MainServer {
                 }
             }
 
-            public void invokeAfter(Method method, Request JBRequest, Object invokeResult) throws Exception {
+            public void invokeAfter(Method method, Request request, Object invokeResult) throws Exception {
                 System.out.println(method.getName());
             }
 
