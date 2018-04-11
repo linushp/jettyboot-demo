@@ -21,60 +21,65 @@ public class MainServer {
 
     private static Logger logger = Log.getLogger(MainServer.class);
 
+//
+//    public static void main(String[] args) throws Exception {
+//
+//        long t1 = System.currentTimeMillis();
+//
+//        MyConnectionFactory connectionFactory = MyConnectionFactory.getInstance();
+//        connectionFactory.init();
+//
+//
+//        RestContextHandler context = new RestContextHandler("/api");
+//        context.addService(new UserDAO());
+//        context.addController("/user",new UserController());
+//        context.addServlet("/hello*",new HelloServlet());
+//
+//        context.addRequestAspect(new RequestAspect() {
+//
+//            public void invokeBefore(Method method, Request request) throws Exception {
+//                System.out.println(method.getName());
+//                String token  = request.getCookieValue("token");
+//                if (token==null || token.isEmpty()){
+////                    throw new NotLoginException();
+//                }
+//                request.setAspectVariable("currentUser",new CurrentUser());
+//            }
+//
+//
+//            public void invokeAfter(Method method, Request request, Object invokeResult) throws Exception {
+//                System.out.println(method.getName());
+//            }
+//
+//        });
+//
+//
+//
+//        context.addExceptionHandler(new MyExceptionHandler());
+//
+//
+//        Server server = new Server(8001);
+//        server.setHandler(context);
+//        server.start();
+//
+//        long t2 = System.currentTimeMillis();
+//
+//        logger.info("Server Started success , cost time " + (t2 - t1) + " ms");
+//        server.join();
+//
+//    }
 
-    public static void main(String[] args) throws Exception {
-
-        long t1 = System.currentTimeMillis();
-
-        MyConnectionFactory connectionFactory = MyConnectionFactory.getInstance();
-        connectionFactory.init();
 
 
-        RestContextHandler context = new RestContextHandler("/api");
-        context.addService(new UserDAO());
-        context.addController("/user",new UserController());
-        context.addServlet("/hello*",new HelloServlet());
+    public static void main(String [] args) throws Exception {
 
-        context.addRequestAspect(new RequestAspect() {
-
-            public void invokeBefore(Method method, Request request) throws Exception {
-                System.out.println(method.getName());
-                String token  = request.getCookieValue("token");
-                if (token==null || token.isEmpty()){
-//                    throw new NotLoginException();
-                }
-                request.setAspectVariable("currentUser",new CurrentUser());
-            }
+        MyConnectionFactory.getInstance().init();
 
 
-            public void invokeAfter(Method method, Request request, Object invokeResult) throws Exception {
-                System.out.println(method.getName());
-            }
-
-        });
-
-
-
-        context.addExceptionHandler(new MyExceptionHandler());
-
-
-        Server server = new Server(8001);
-        server.setHandler(context);
-        server.start();
-
-        long t2 = System.currentTimeMillis();
-
-        logger.info("Server Started success , cost time " + (t2 - t1) + " ms");
-        server.join();
-
-    }
-
-
-
-    public static void main2() throws Exception {
 
         JettyServer server = new JettyServer();
 
+        server.addService(new UserDAO());
         server.addController("/user", new UserController());
 
         server.listen(8001);
