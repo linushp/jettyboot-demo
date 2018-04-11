@@ -7,9 +7,11 @@ import cn.ubibi.jettyboot.demotest.dao.UserDAO;
 import cn.ubibi.jettyboot.demotest.dao.base.MyConnectionFactory;
 import cn.ubibi.jettyboot.demotest.servlets.HelloServlet;
 import cn.ubibi.jettyboot.framework.rest.JettyServer;
+import cn.ubibi.jettyboot.framework.rest.ifs.MethodArgumentResolver;
 import cn.ubibi.jettyboot.framework.rest.ifs.RequestAspect;
 import cn.ubibi.jettyboot.framework.rest.Request;
 import cn.ubibi.jettyboot.framework.rest.RestContextHandler;
+import cn.ubibi.jettyboot.framework.rest.model.MethodArgument;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
@@ -81,6 +83,19 @@ public class MainServer {
 
         server.addService(new UserDAO());
         server.addController("/user", new UserController());
+
+        server.addMethodArgumentResolver(new MethodArgumentResolver() {
+            @Override
+            public boolean isSupport(MethodArgument methodArgument) {
+                return false;
+            }
+
+            @Override
+            public Object resolveArgument(MethodArgument methodArgument, Request request) {
+                return null;
+            }
+        });
+
 
         server.listen(8001);
 
