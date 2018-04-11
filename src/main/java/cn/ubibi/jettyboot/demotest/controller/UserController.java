@@ -18,10 +18,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.ubibi.jettyboot.framework.rest.annotation.AspectVariable;
-import cn.ubibi.jettyboot.framework.rest.annotation.GetMapping;
-import cn.ubibi.jettyboot.framework.rest.annotation.PostMapping;
-import cn.ubibi.jettyboot.framework.rest.annotation.RequestParams;
+import cn.ubibi.jettyboot.framework.rest.annotation.*;
 import cn.ubibi.jettyboot.framework.rest.ifs.RequestParser;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
@@ -34,6 +31,19 @@ public class UserController {
     @Autowired
     private UserDAO userDAO;
 
+    @GetMapping("/test_insert2")
+    public UpdateResult getmm212(@RequestParam("name") String name) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("name",name);
+        map.put("yaoli",123);
+        map.put("dai",3);
+        map.put("fid",3);
+        map.put("mid",3);
+        map.put("create_time",System.currentTimeMillis());
+        map.put("update_time",System.currentTimeMillis());
+        return userDAO.insertObject(map);
+//        return  "123---" + reqParser.getName() +"=====" +
+    }
 
     @GetMapping("/test_insert")
     public UpdateResult getmm21(@RequestParams UserInfoParser reqParser, @AspectVariable CurrentUser currentUser) throws Exception {
