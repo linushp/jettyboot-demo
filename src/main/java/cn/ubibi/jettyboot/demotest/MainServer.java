@@ -2,6 +2,7 @@ package cn.ubibi.jettyboot.demotest;
 
 import cn.ubibi.jettyboot.demotest.controller.MyExceptionHandler;
 import cn.ubibi.jettyboot.demotest.controller.UserController;
+import cn.ubibi.jettyboot.demotest.controller.parser.CurrentUser;
 import cn.ubibi.jettyboot.demotest.dao.UserDAO;
 import cn.ubibi.jettyboot.demotest.dao.base.MyConnectionFactory;
 import cn.ubibi.jettyboot.demotest.servlets.HelloServlet;
@@ -41,7 +42,9 @@ public class MainServer {
                 if (token==null || token.isEmpty()){
 //                    throw new NotLoginException();
                 }
+                request.setAspectVariable("currentUser",new CurrentUser());
             }
+
 
             public void invokeAfter(Method method, Request request, Object invokeResult) throws Exception {
                 System.out.println(method.getName());
