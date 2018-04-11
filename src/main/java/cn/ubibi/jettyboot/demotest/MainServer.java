@@ -6,9 +6,10 @@ import cn.ubibi.jettyboot.demotest.controller.parser.CurrentUser;
 import cn.ubibi.jettyboot.demotest.dao.UserDAO;
 import cn.ubibi.jettyboot.demotest.dao.base.MyConnectionFactory;
 import cn.ubibi.jettyboot.demotest.servlets.HelloServlet;
+import cn.ubibi.jettyboot.framework.rest.JettyServer;
 import cn.ubibi.jettyboot.framework.rest.ifs.RequestAspect;
 import cn.ubibi.jettyboot.framework.rest.Request;
-import cn.ubibi.jettyboot.framework.rest.JBContextHandler;
+import cn.ubibi.jettyboot.framework.rest.RestContextHandler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
@@ -29,7 +30,7 @@ public class MainServer {
         connectionFactory.init();
 
 
-        JBContextHandler context = new JBContextHandler("/api");
+        RestContextHandler context = new RestContextHandler("/api");
         context.addService(new UserDAO());
         context.addController("/user",new UserController());
         context.addServlet("/hello*",new HelloServlet());
@@ -69,21 +70,15 @@ public class MainServer {
     }
 
 
-//
-//    public static void main2(){
-//
-//        JettyBootServer server = new JettyBootServer();
-//
-//
-//        server.addService(new UserDAO());
-//        server.addService(new UserService());
-//
-//        server.addExceptionHandler(new MyExceptionHandler());
-//        server.addController("/user", new UserController());
-//
-//
-//        server.listen(8001);
-//
-//    }
+
+    public static void main2() throws Exception {
+
+        JettyServer server = new JettyServer();
+
+        server.addController("/user", new UserController());
+
+        server.listen(8001);
+
+    }
 
 }
