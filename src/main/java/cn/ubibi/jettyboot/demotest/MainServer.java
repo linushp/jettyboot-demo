@@ -44,7 +44,7 @@ public class MainServer {
                 if (token==null || token.isEmpty()){
 //                    throw new NotLoginException();
                 }
-                request.setAspectVariable("currentUser",new CurrentUser());
+                request.setAspectVariable("currentUser",new CurrentUser(token));
             }
 
 
@@ -57,8 +57,6 @@ public class MainServer {
 
         context.addExceptionHandler(new MyExceptionHandler());
         context.addResourceHandler(new ClassPathResourceHandler("/public/"));
-
-
 
 
 

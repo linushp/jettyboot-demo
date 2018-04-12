@@ -35,9 +35,9 @@ public class UserController {
 
 
     @GetMapping("/test_page")
-    public PageRender getmm212_page(@RequestParam("name") String name) throws Exception {
+    public PageRender getmm212_page(@RequestParam("name") String name,@AspectVariable CurrentUser currentUser) throws Exception {
         Map<String,String> map = new HashMap<>();
-        map.put("name",name + "__" + this.getClass().getClassLoader().getClass().getName());
+        map.put("name",name + "__" + this.getClass().getClassLoader().getClass().getName() + "___" + currentUser.getName());
         return new PageRender("test.html",map);
     }
 
@@ -52,11 +52,10 @@ public class UserController {
         map.put("create_time",System.currentTimeMillis());
         map.put("update_time",System.currentTimeMillis());
         return userDAO.insertObject(map);
-//        return  "123---" + reqParser.getName() +"=====" +
     }
 
     @GetMapping("/test_insert")
-    public UpdateResult getmm21(@RequestParams UserInfoParser reqParser, @AspectVariable CurrentUser currentUser) throws Exception {
+    public UpdateResult getmm21(@RequestParams UserInfoParser reqParser) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("name","name" + System.currentTimeMillis() + "_" + Math.random());
         map.put("yaoli",123);
@@ -66,7 +65,6 @@ public class UserController {
         map.put("create_time",System.currentTimeMillis());
         map.put("update_time",System.currentTimeMillis());
        return userDAO.insertObject(map);
-//        return  "123---" + reqParser.getName() +"=====" +
     }
 
 
