@@ -31,6 +31,16 @@ public class UserController {
     @Autowired
     private UserDAO userDAO;
 
+
+
+
+    @GetMapping("/test_page")
+    public PageRender getmm212_page(@RequestParam("name") String name) throws Exception {
+        Map<String,String> map = new HashMap<>();
+        map.put("name",name + "__" + this.getClass().getClassLoader().getClass().getName());
+        return new PageRender("test.html",map);
+    }
+
     @GetMapping("/test_insert2")
     public UpdateResult getmm212(@RequestParam("name") String name) throws Exception {
         Map<String, Object> map = new HashMap<>();
