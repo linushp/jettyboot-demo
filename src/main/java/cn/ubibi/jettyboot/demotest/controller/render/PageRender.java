@@ -76,26 +76,7 @@ public class PageRender implements ResponseRender {
     }
 
 
-    private String template;
-    private Object pageData;
 
-    public PageRender(String template, Object pageData) {
-        this.pageData = pageData;
-        this.template = template;
-    }
-
-    @Override
-    public void doRender(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        ServletContext servletContext = request.getServletContext();
-        WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-
-        Map<String, Object> variables = objectToMap(this.pageData);
-        ctx.setVariables(variables);
-
-        response.setCharacterEncoding("utf-8");
-        templateEngine.process(this.template, ctx, response.getWriter());
-    }
 
 
     private static Map<String, Object> objectToMap(Object obj) {
@@ -120,6 +101,34 @@ public class PageRender implements ResponseRender {
         }
 
         return map;
+    }
+
+
+
+
+
+
+
+
+    private String template;
+    private Object pageData;
+
+    public PageRender(String template, Object pageData) {
+        this.pageData = pageData;
+        this.template = template;
+    }
+
+    @Override
+    public void doRender(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        ServletContext servletContext = request.getServletContext();
+        WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+
+        Map<String, Object> variables = objectToMap(this.pageData);
+        ctx.setVariables(variables);
+
+        response.setCharacterEncoding("utf-8");
+        templateEngine.process(this.template, ctx, response.getWriter());
     }
 
 }
