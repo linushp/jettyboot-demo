@@ -33,13 +33,14 @@ public class UserController {
 
 
 
-
     @GetMapping("/test_page")
     public PageRender getmm212_page(@RequestParam("name") String name,@AspectVariable CurrentUser currentUser) throws Exception {
         Map<String,String> map = new HashMap<>();
         map.put("name",name + "__" + this.getClass().getClassLoader().getClass().getName() + "___" + currentUser.getName());
         return new PageRender("test.html",map);
     }
+
+
 
     @GetMapping("/test_insert2")
     public UpdateResult getmm212(@RequestParam("name") String name) throws Exception {
@@ -53,6 +54,8 @@ public class UserController {
         map.put("update_time",System.currentTimeMillis());
         return userDAO.insertObject(map);
     }
+
+
 
     @GetMapping("/test_insert")
     public UpdateResult getmm21(@RequestParams UserInfoParser reqParser) throws Exception {
@@ -80,22 +83,15 @@ public class UserController {
 
 
 
+
     @GetMapping(value = "/")
     public Page<UserEntity> getUserById3(Request JBRequest, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Integer pageSize = JBRequest.getRequestParam("pageSize","10").toInteger();
         Integer pageNo = JBRequest.getRequestParam("pageNo","0").toInteger();
 
-
-
-
-//        logger.info("aaa");
         long t1 = System.currentTimeMillis();
-
-
-
         Page<UserEntity> result = userDAO.findPage(pageNo, pageSize);
-//        return "hello222";
 
         long t2 = System.currentTimeMillis();
 
@@ -107,34 +103,17 @@ public class UserController {
 
 
     @GetMapping(value = "/:uid")
-    public Object getUserById(Request params, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public Object getUserById(Request params, HttpServletResponse response) throws Exception {
 
         String uid =  params.getPathVariable("uid").toString();
         String name = params.getRequestParam("name").toString();
-        String[] names = request.getParameterValues("name");
-
-
-//        System.out.println("111");
-//        try {
-//            Thread.sleep(1000 * 10);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-//        request.getSession(true).setAttribute("uid",uid);
-//        Object mm = request.getSession(true).getAttribute("uid");
+        String[] names = params.getParameterValues("name");
 
         Cookie cookie = new Cookie("aaa","a2333");
+
         response.addCookie(cookie);
 
-        Cookie[] cookies = request.getCookies();
-
-        String aaa = request.getContextPath();
-
         return new PageRender("getUserById",userDAO.findById(uid));
-
-//        return userDAO.findById(uid);
-//        return "hello:" + uid + ":" + name;
     }
 
 

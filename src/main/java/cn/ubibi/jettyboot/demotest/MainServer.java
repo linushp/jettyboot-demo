@@ -3,6 +3,7 @@ package cn.ubibi.jettyboot.demotest;
 import cn.ubibi.jettyboot.demotest.controller.MyExceptionHandler;
 import cn.ubibi.jettyboot.demotest.controller.UserController;
 import cn.ubibi.jettyboot.demotest.controller.parser.CurrentUser;
+import cn.ubibi.jettyboot.demotest.controller.render.PageRender;
 import cn.ubibi.jettyboot.demotest.dao.UserDAO;
 import cn.ubibi.jettyboot.demotest.dao.base.MyConnectionFactory;
 import cn.ubibi.jettyboot.demotest.servlets.HelloServlet;
@@ -27,8 +28,8 @@ public class MainServer {
 
         long t1 = System.currentTimeMillis();
 
-        MyConnectionFactory connectionFactory = MyConnectionFactory.getInstance();
-        connectionFactory.init();
+        MyConnectionFactory.getInstance().init();
+        PageRender.init();
 
 
         RestContextHandler context = new RestContextHandler("/");
@@ -71,6 +72,8 @@ public class MainServer {
         logger.info("" + MainServer.class.getClassLoader().getClass().getName());
 
         logger.info("Server Started success , cost time " + (t2 - t1) + " ms");
+
+//        logger.info("" + System.getProperty("user.dir"));
         server.join();
 
     }

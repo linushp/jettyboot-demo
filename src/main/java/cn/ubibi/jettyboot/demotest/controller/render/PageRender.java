@@ -1,41 +1,84 @@
 package cn.ubibi.jettyboot.demotest.controller.render;
+
+import cn.ubibi.jettyboot.framework.commons.StringUtils;
+import cn.ubibi.jettyboot.framework.commons.SystemUtils;
 import cn.ubibi.jettyboot.framework.rest.ifs.ResponseRender;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.FileTemplateResolver;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.lang.reflect.Field;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class PageRender implements ResponseRender{
+public class PageRender implements ResponseRender {
 
-    private static TemplateEngine templateEngine;
+    private static TemplateEngine templateEngine = null;
 
     static {
-//        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
-//        templateResolver.setTemplateMode("XHTML");
-//        templateResolver.setPrefix("/WEB-INF/templates/");
-//        templateResolver.setSuffix(".html");
-//        FileTemplateResolver templateResolver = new FileTemplateResolver();
+        init();
+    }
 
-        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver(PageRender.class.getClassLoader());
-//        templateResolver.setSuffix(".html");
-        templateResolver.setPrefix("/templates/");
+
+    public static void init() {
+        if (templateEngine == null) {
+            templateEngine = new TemplateEngine();
+            templateEngine.setTemplateResolver(getTemplateResolver());
+        }
+    }
+
+
+    private static ITemplateResolver getTemplateResolver() {
+        if (SystemUtils.isMavenDevMode()) {
+            return getFileTemplateResolver();
+        }
+        return getClassLoaderTemplateResolver();
+    }
+
+
+    private static FileTemplateResolver getFileTemplateResolver() {
+
+        URL classLoaderResource = PageRender.class.getClassLoader().getResource("");
+        String classPath = StringUtils.appendIfNotEnd(classLoaderResource.getPath(), File.separator);
+        String srcResPath = classPath + ("../../src/main/resources".replace("/", File.separator));
+
+
+        FileTemplateResolver templateResolver = new FileTemplateResolver();
+
+        templateResolver.setSuffix(".html");
+        templateResolver.setPrefix(srcResPath + "/templates/");
         templateResolver.setCacheTTLMs(3600000L);
         templateResolver.setCacheable(false);
+        return templateResolver;
+    }
 
-        templateEngine = new TemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver);
+
+    private static ClassLoaderTemplateResolver getClassLoaderTemplateResolver() {
+
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver(PageRender.class.getClassLoader());
+
+        templateResolver.setSuffix(".html");
+        templateResolver.setPrefix("/templates/");
+        templateResolver.setCacheTTLMs(3600000L);
+        templateResolver.setCacheable(true);
+
+        return templateResolver;
     }
 
 
     private String template;
     private Object pageData;
+
     public PageRender(String template, Object pageData) {
         this.pageData = pageData;
         this.template = template;
@@ -56,11 +99,11 @@ public class PageRender implements ResponseRender{
 
 
     private static Map<String, Object> objectToMap(Object obj) {
-        if(obj == null){
+        if (obj == null) {
             return null;
         }
 
-        if(obj instanceof Map){
+        if (obj instanceof Map) {
             return (Map<String, Object>) obj;
         }
 
