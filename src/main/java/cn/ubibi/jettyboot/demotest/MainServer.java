@@ -41,6 +41,12 @@ public class MainServer {
         context.addRequestAspect(new RequestAspect() {
 
             public void invokeBefore(Method method, Request request) throws Exception {
+
+                request.getServletResponse().setHeader("Server","hello world");
+                request.getServletResponse().setCharacterEncoding("utf-8");
+                request.getServletRequest().setCharacterEncoding("utf-8");
+
+
                 LOGGER.info(method.getName());
                 String token = request.getCookieValue("token");
                 if (token == null || token.isEmpty()) {
