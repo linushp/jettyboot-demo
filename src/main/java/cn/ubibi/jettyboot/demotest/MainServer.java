@@ -1,5 +1,6 @@
 package cn.ubibi.jettyboot.demotest;
 
+import cn.ubibi.jettyboot.demotest.controller.JsApiController;
 import cn.ubibi.jettyboot.demotest.controller.MyExceptionHandler;
 import cn.ubibi.jettyboot.demotest.controller.UserController;
 import cn.ubibi.jettyboot.demotest.controller.parser.CurrentUser;
@@ -12,16 +13,16 @@ import cn.ubibi.jettyboot.framework.rest.ifs.RequestAspect;
 import cn.ubibi.jettyboot.framework.rest.Request;
 import cn.ubibi.jettyboot.framework.rest.RestContextHandler;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.util.log.Log;
-import org.eclipse.jetty.util.log.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 
 
 public class MainServer {
 
-    private static Logger logger = Log.getLogger(MainServer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainServer.class);
 
 
     public static void main(String[] args) throws Exception {
@@ -34,23 +35,23 @@ public class MainServer {
 
         RestContextHandler context = new RestContextHandler("/");
         context.addService(new UserDAO());
-        context.addController("/user",new UserController());
-        context.addServlet("/hello*",new HelloServlet());
+        context.addController("/user", new UserController());
+        context.addServlet("/hello*", new HelloServlet());
 
         context.addRequestAspect(new RequestAspect() {
 
             public void invokeBefore(Method method, Request request) throws Exception {
-                System.out.println(method.getName());
-                String token  = request.getCookieValue("token");
-                if (token==null || token.isEmpty()){
+                LOGGER.info(method.getName());
+                String token = request.getCookieValue("token");
+                if (token == null || token.isEmpty()) {
 //                    throw new NotLoginException();
                 }
-                request.setAspectVariable("currentUser",new CurrentUser(token));
+                request.setAspectVariable("currentUser", new CurrentUser(token));
             }
 
 
             public void invokeAfter(Method method, Request request, Object invokeResult) throws Exception {
-                System.out.println(method.getName());
+                LOGGER.info(method.getName());
             }
 
         });
@@ -59,8 +60,7 @@ public class MainServer {
         context.addExceptionHandler(new MyExceptionHandler());
         context.addResourceHandler(new ClassPathResourceHandler("/public/"));
 
-
-
+        context.addController("/jsApi",new JsApiController(context));
 
         Server server = new Server(8001);
         server.setHandler(context);
@@ -69,15 +69,14 @@ public class MainServer {
         long t2 = System.currentTimeMillis();
 
 
-        logger.info("" + MainServer.class.getClassLoader().getClass().getName());
+        LOGGER.info("" + MainServer.class.getClassLoader().getClass().getName());
 
-        logger.info("Server Started success , cost time " + (t2 - t1) + " ms");
+        LOGGER.info("Server Started success , cost time " + (t2 - t1) + " ms");
 
 //        logger.info("" + System.getProperty("user.dir"));
         server.join();
 
     }
-
 
 
 //
