@@ -24,6 +24,7 @@ import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
 
 
+@Controller("/user")
 public class UserController {
 
     private static Logger logger = Log.getLogger(UserController.class);

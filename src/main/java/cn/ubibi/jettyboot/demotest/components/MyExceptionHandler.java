@@ -1,11 +1,14 @@
-package cn.ubibi.jettyboot.demotest.controller;
+package cn.ubibi.jettyboot.demotest.components;
 
+import cn.ubibi.jettyboot.framework.rest.annotation.Component;
 import cn.ubibi.jettyboot.framework.rest.ifs.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+@Component
 public class MyExceptionHandler implements ExceptionHandler {
 
     @Override

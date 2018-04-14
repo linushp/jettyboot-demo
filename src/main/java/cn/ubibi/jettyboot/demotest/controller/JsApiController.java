@@ -1,21 +1,21 @@
 package cn.ubibi.jettyboot.demotest.controller;
 
+import cn.ubibi.jettyboot.framework.ioc.Autowired;
 import cn.ubibi.jettyboot.framework.rest.ControllerMethodHandler;
 import cn.ubibi.jettyboot.framework.rest.RestContextHandler;
+import cn.ubibi.jettyboot.framework.rest.annotation.Controller;
 import cn.ubibi.jettyboot.framework.rest.annotation.GetMapping;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Controller("/jsApi")
 public class JsApiController {
 
+
+    @Autowired
     private RestContextHandler context;
-
-    public JsApiController(RestContextHandler context) {
-        this.context = context;
-    }
-
 
 
     @GetMapping("/")

@@ -4,11 +4,14 @@ import cn.ubibi.jettyboot.demotest.dao.base.MyDAO;
 import cn.ubibi.jettyboot.demotest.entity.UserEntity;
 import cn.ubibi.jettyboot.framework.commons.StringUtils;
 import cn.ubibi.jettyboot.framework.commons.model.Page;
+import cn.ubibi.jettyboot.framework.rest.annotation.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+@Service
 public class UserDAO extends MyDAO<UserEntity> {
 
     public UserDAO() {
