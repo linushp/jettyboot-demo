@@ -2,9 +2,12 @@ package cn.ubibi.jettyboot.demotest;
 
 import cn.ubibi.jettyboot.demotest.controller.render.PageRender;
 import cn.ubibi.jettyboot.demotest.dao.base.MyConnectionFactory;
-import cn.ubibi.jettyboot.framework.rest.RestContextHandler;
+import cn.ubibi.jettyboot.framework.rest.ClassPathResourceHandler;
+import cn.ubibi.jettyboot.framework.rest.ControllerContextHandler;
+import cn.ubibi.jettyboot.framework.rest.JettyBootServer;
 import org.eclipse.jetty.server.Server;
 
+import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,15 +25,13 @@ public class MainServer {
 
 
 
-        RestContextHandler context = new RestContextHandler("/");
-        context.addByPackageScanner(MainServer.class.getPackage().getName());
 
+        JettyBootServer server = new JettyBootServer(MainServer.class);
 
+        server.doScanPackage();
 
-        Server server = new Server(8001);
-        server.setHandler(context);
-        server.start();
-        server.join();
+        server.listen(8001);
+
 
     }
 

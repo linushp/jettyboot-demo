@@ -1,10 +1,9 @@
 package cn.ubibi.jettyboot.demotest.components;
 
-import cn.ubibi.jettyboot.demotest.MainServer;
 import cn.ubibi.jettyboot.demotest.controller.parser.CurrentUser;
-import cn.ubibi.jettyboot.framework.rest.Request;
+import cn.ubibi.jettyboot.framework.rest.ControllerRequest;
 import cn.ubibi.jettyboot.framework.rest.annotation.Component;
-import cn.ubibi.jettyboot.framework.rest.ifs.RequestAspect;
+import cn.ubibi.jettyboot.framework.rest.ifs.ControllerAspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,11 +11,11 @@ import java.lang.reflect.Method;
 
 
 @Component
-public class MyRequestAspect implements RequestAspect {
+public class MyRequestAspect implements ControllerAspect {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RequestAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ControllerAspect.class);
 
-    public void invokeBefore(Method method, Request request) throws Exception {
+    public void invokeBefore(Method method, ControllerRequest request) throws Exception {
 
         request.getServletResponse().setHeader("Server", "hello world");
         request.getServletResponse().setCharacterEncoding("utf-8");
@@ -32,7 +31,7 @@ public class MyRequestAspect implements RequestAspect {
     }
 
 
-    public void invokeAfter(Method method, Request request, Object invokeResult) throws Exception {
+    public void invokeAfter(Method method, ControllerRequest request, Object invokeResult) throws Exception {
         LOGGER.info(method.getName());
     }
 

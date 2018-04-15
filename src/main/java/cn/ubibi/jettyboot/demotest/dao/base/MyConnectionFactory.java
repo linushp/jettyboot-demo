@@ -29,7 +29,7 @@ public class MyConnectionFactory implements ConnectionFactory {
 
 
     public void init() {
-        this.dataSource = DBUtils.createComboPooledDataSource("c3p0.properties");
+        this.dataSource = DBUtils.createComboPooledDataSource("my_c3p0.properties");
         try {
             Connection conn = this.dataSource.getConnection();
             DataAccess dataAccess = DataAccess.use(conn);

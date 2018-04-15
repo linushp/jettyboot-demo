@@ -74,7 +74,7 @@ public class UserController {
 
 
     @GetMapping( "/test")
-    public String getmm(UserInfoParser reqParser, Request request, CurrentUser currentUser) throws Exception {
+    public String getmm(UserInfoParser reqParser, ControllerRequest request, CurrentUser currentUser) throws Exception {
         new UserDAO().findAll();
         if(reqParser instanceof RequestParser){
             System.out.println("111");
@@ -86,7 +86,7 @@ public class UserController {
 
 
     @GetMapping(value = "/")
-    public Page<UserEntity> getUserById3(Request JBRequest, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public Page<UserEntity> getUserById3(ControllerRequest JBRequest, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Integer pageSize = JBRequest.getRequestParam("pageSize","10").toInteger();
         Integer pageNo = JBRequest.getRequestParam("pageNo","0").toInteger();
@@ -104,7 +104,7 @@ public class UserController {
 
 
     @GetMapping(value = "/:uid")
-    public Object getUserById(Request params, HttpServletResponse response) throws Exception {
+    public Object getUserById(ControllerRequest params, HttpServletResponse response) throws Exception {
 
         String uid =  params.getPathVariable("uid").toString();
         String name = params.getRequestParam("name").toString();
@@ -114,12 +114,12 @@ public class UserController {
 
         response.addCookie(cookie);
 
-        return new PageRender("getUserById",userDAO.findById(uid));
+        return userDAO.findById(uid);
     }
 
 
     @PostMapping("/new/:uid")
-    public String getUserById2(Request request) throws IOException, ServletException {
+    public String getUserById2(ControllerRequest request) throws IOException, ServletException {
         String aaa = request.getContextPath();
         return "123saaa";
     }
