@@ -38,6 +38,7 @@ class MyClassPathResourceHandler2 extends ClassPathResourceHandler {
 
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         if (isSupportSuffix(target)){
+            response.setHeader("Server","hello");
             super.handle(target,baseRequest,request,response);
         }
     }
