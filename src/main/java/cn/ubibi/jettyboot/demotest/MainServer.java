@@ -26,38 +26,38 @@ public class MainServer {
 
     public static void main(String[] args) throws Exception {
 
-
-        Server server = new Server(8001);
-        server.setHandler(new AbstractHandler() {
-            @Override
-            public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-                baseRequest.setHandled(true);
-
-                response.setContentType("application/json; charset=UTF-8");
-                response.getWriter().write("hello world");
-                response.getWriter().flush();
-                response.getWriter().close();
-                response.flushBuffer();
-            }
-        });
-
-
-        server.start();
-        server.join();
-
-
-
-//        MyConnectionFactory.getInstance().init();
-//        PageRender.init();
+//
+//        Server server = new Server(8001);
+//        server.setHandler(new AbstractHandler() {
+//            @Override
+//            public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+//                baseRequest.setHandled(true);
+//
+//                response.setContentType("application/json; charset=UTF-8");
+//                response.getWriter().write("hello world");
+//                response.getWriter().flush();
+//                response.getWriter().close();
+//                response.flushBuffer();
+//            }
+//        });
 //
 //
-//
-//
-//        JettyBootServer server = new JettyBootServer(MainServer.class);
-//
-//        server.doScanPackage();
-//
-//        server.listen(8001);
+//        server.start();
+//        server.join();
+
+
+
+        MyConnectionFactory.getInstance().init();
+        PageRender.init();
+
+
+
+
+        JettyBootServer server = new JettyBootServer(MainServer.class);
+
+        server.doScanPackage();
+
+        server.listen(8001);
 
 
     }
