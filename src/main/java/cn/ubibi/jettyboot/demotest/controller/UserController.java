@@ -33,6 +33,10 @@ public class UserController {
     private UserDAO userDAO;
 
 
+    @GetMapping("/helloworld")
+    public String helloworld(){
+        return "hello world";
+    }
 
     @GetMapping("/test_page")
     public PageRender getmm212_page(@RequestParam("name") String name,@AspectVariable CurrentUser currentUser) throws Exception {

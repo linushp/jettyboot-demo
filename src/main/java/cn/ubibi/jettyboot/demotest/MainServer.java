@@ -5,11 +5,18 @@ import cn.ubibi.jettyboot.demotest.dao.base.MyConnectionFactory;
 import cn.ubibi.jettyboot.framework.rest.ClassPathResourceHandler;
 import cn.ubibi.jettyboot.framework.rest.ControllerContextHandler;
 import cn.ubibi.jettyboot.framework.rest.JettyBootServer;
+import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 
+import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 public class MainServer {
@@ -20,17 +27,37 @@ public class MainServer {
     public static void main(String[] args) throws Exception {
 
 
-        MyConnectionFactory.getInstance().init();
-        PageRender.init();
+        Server server = new Server(8001);
+        server.setHandler(new AbstractHandler() {
+            @Override
+            public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+                baseRequest.setHandled(true);
+
+                response.setContentType("application/json; charset=UTF-8");
+                response.getWriter().write("hello world");
+                response.getWriter().flush();
+                response.getWriter().close();
+                response.flushBuffer();
+            }
+        });
+
+
+        server.start();
+        server.join();
 
 
 
-
-        JettyBootServer server = new JettyBootServer(MainServer.class);
-
-        server.doScanPackage();
-
-        server.listen(8001);
+//        MyConnectionFactory.getInstance().init();
+//        PageRender.init();
+//
+//
+//
+//
+//        JettyBootServer server = new JettyBootServer(MainServer.class);
+//
+//        server.doScanPackage();
+//
+//        server.listen(8001);
 
 
     }
