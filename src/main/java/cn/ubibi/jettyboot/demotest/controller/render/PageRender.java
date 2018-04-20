@@ -1,7 +1,7 @@
 package cn.ubibi.jettyboot.demotest.controller.render;
 
+import cn.ubibi.jettyboot.demotest.configs.SystemConfig;
 import cn.ubibi.jettyboot.framework.commons.StringUtils;
-import cn.ubibi.jettyboot.framework.commons.SystemUtils;
 import cn.ubibi.jettyboot.framework.rest.ifs.ResponseRender;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -14,11 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PageRender implements ResponseRender {
@@ -39,7 +37,7 @@ public class PageRender implements ResponseRender {
 
 
     private static ITemplateResolver getTemplateResolver() {
-        if (SystemUtils.isMavenDevMode()) {
+        if (SystemConfig.getInstance().isDev()) {
             return getFileTemplateResolver();
         }
         return getClassLoaderTemplateResolver();

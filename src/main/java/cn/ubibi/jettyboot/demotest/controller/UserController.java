@@ -24,7 +24,7 @@ import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
 
 
-@Controller("/user")
+@Controller({"/user","/vip"})
 public class UserController {
 
     private static Logger logger = Log.getLogger(UserController.class);
@@ -33,10 +33,21 @@ public class UserController {
     private UserDAO userDAO;
 
 
-    @GetMapping("/helloworld")
-    public String helloworld(){
-        return "hello world";
+    @GetMapping("/helloworld/:name")
+    public String helloworld(ControllerRequest request,@PathVariable("name") String name){
+        return "hello world : vip " + isVip(request) + " name " + name;
     }
+
+
+    private boolean isVip(ControllerRequest request){
+        String target = request.getTargetPath();
+        if (target.startsWith("/vip")){
+            return true;
+        }
+        return false;
+    }
+
+
 
     @GetMapping("/test_page")
     public PageRender getmm212_page(@RequestParam("name") String name,@AspectVariable CurrentUser currentUser) throws Exception {

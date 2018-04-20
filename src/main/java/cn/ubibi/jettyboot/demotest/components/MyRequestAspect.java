@@ -32,7 +32,7 @@ public class MyRequestAspect implements ControllerAspect {
 
 
     public void invokeAfter(Method method, ControllerRequest request, Object invokeResult) throws Exception {
-        LOGGER.info(method.getName());
+        LOGGER.info(request.getPathInfo() + ":::::::::" + method.getDeclaringClass().getName() + "."+ method.getName());
     }
 
 }
