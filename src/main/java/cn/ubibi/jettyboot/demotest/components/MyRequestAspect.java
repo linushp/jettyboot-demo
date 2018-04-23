@@ -17,7 +17,7 @@ public class MyRequestAspect implements ControllerAspect {
 
     public void invokeBefore(Method method, ControllerRequest request) throws Exception {
 
-        request.getServletResponse().setHeader("Server", "hello");
+        request.getServletResponse().setHeader("Server", "boot " + System.currentTimeMillis());
         request.getServletResponse().setCharacterEncoding("utf-8");
         request.getServletRequest().setCharacterEncoding("utf-8");
 
