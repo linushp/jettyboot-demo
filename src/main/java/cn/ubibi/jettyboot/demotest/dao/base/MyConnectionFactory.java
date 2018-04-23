@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
+import java.util.Properties;
 
 public class MyConnectionFactory implements ConnectionFactory {
 
@@ -36,7 +38,9 @@ public class MyConnectionFactory implements ConnectionFactory {
 
         try {
 
+
             MyC3P0Config config = PropertiesUtils.getBeanByProperties("my_c3p0.properties",MyC3P0Config.class);
+
 
             ComboPooledDataSource dataSource = new ComboPooledDataSource();
 

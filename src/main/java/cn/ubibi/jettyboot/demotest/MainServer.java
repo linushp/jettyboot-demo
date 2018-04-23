@@ -3,6 +3,7 @@ package cn.ubibi.jettyboot.demotest;
 import cn.ubibi.jettyboot.demotest.controller.render.PageRender;
 import cn.ubibi.jettyboot.demotest.dao.base.MyConnectionFactory;
 
+import cn.ubibi.jettyboot.framework.commons.scan.PackageScanner;
 import cn.ubibi.jettyboot.framework.rest.JettyBootServer;
 
 
