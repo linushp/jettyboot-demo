@@ -1,8 +1,9 @@
 package cn.ubibi.jettyboot.demotest.dao.base;
 
+import cn.ubibi.jettyboot.framework.commons.PropertiesUtils;
 import cn.ubibi.jettyboot.framework.jdbc.DataAccess;
-import cn.ubibi.jettyboot.framework.jdbc.DBUtils;
 import cn.ubibi.jettyboot.framework.jdbc.ConnectionFactory;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,9 +29,36 @@ public class MyConnectionFactory implements ConnectionFactory {
     }
 
 
+
     public void init() {
-        this.dataSource = DBUtils.createComboPooledDataSource("my_c3p0.properties");
+
+
+
         try {
+
+            MyC3P0Config config = PropertiesUtils.getBeanByProperties("my_c3p0.properties",MyC3P0Config.class);
+
+            ComboPooledDataSource dataSource = new ComboPooledDataSource();
+
+            dataSource.setTestConnectionOnCheckin(true);
+            dataSource.setTestConnectionOnCheckout(true);
+            dataSource.setAutomaticTestTable("c3p0_test");
+            dataSource.setIdleConnectionTestPeriod(60);
+            dataSource.setMaxIdleTime(180);
+
+
+            dataSource.setDriverClass(config.getDriverClass());
+            dataSource.setJdbcUrl(config.getJdbcUrl());
+            dataSource.setUser(config.getUser());
+            dataSource.setPassword(config.getPassword());
+            dataSource.setInitialPoolSize(config.getInitialPoolSize());
+            dataSource.setMaxPoolSize(config.getMaxPoolSize());
+            dataSource.setMinPoolSize(config.getMinPoolSize());
+            dataSource.setMaxStatements(config.getMaxStatements());
+
+
+
+            this.dataSource = dataSource;
             Connection conn = this.dataSource.getConnection();
             DataAccess dataAccess = DataAccess.use(conn);
             Object m = dataAccess.queryValue("SELECT now()");
