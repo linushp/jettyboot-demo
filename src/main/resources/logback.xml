@@ -9,9 +9,9 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>./my_log.log</file>
+        <file>./_logs/my_log.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>./my_log%d{yyyyMMdd}.log.zip</FileNamePattern>
+            <FileNamePattern>./_logs/my_log%d{yyyyMMdd}.log.zip</FileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -21,8 +21,8 @@
 
 
     <!-- 至多只能配置一个root -->
-    <root level="debug">
-        <appender-ref ref="STDOUT" />
+    <root level="info">
+        <appender-ref ref="STDOUT"  />
         <appender-ref ref="FILE" />
     </root>
 
