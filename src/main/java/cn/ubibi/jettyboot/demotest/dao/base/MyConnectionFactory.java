@@ -69,7 +69,7 @@ public class MyConnectionFactory implements ConnectionFactory {
             Object m = dataAccess.queryValue("SELECT now()");
             LOGGER.info("SELECT now():" + m.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("",e);
         }
     }
 
