@@ -47,8 +47,9 @@ public class MyConnectionFactory implements ConnectionFactory {
             dataSource.setTestConnectionOnCheckin(true);
             dataSource.setTestConnectionOnCheckout(true);
             dataSource.setAutomaticTestTable("c3p0_test");
-            dataSource.setIdleConnectionTestPeriod(60);
+            dataSource.setIdleConnectionTestPeriod(60); // 60秒
             dataSource.setMaxIdleTime(180);
+            dataSource.setCheckoutTimeout(5 * 1000);//5 * 1000 ms
 
 
             dataSource.setDriverClass(config.getDriverClass());
