@@ -5,8 +5,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.Date;
 
-public class UserEntity {
-    private String  id;
+public class UserEntity extends BaseEntity{
+
     private String name;
     private int dai;
     private int yaoli;
@@ -21,13 +21,6 @@ public class UserEntity {
 
     private UserExternData extern;
 
-    public String  getId() {
-        return id;
-    }
-
-    public void setId(String  id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
