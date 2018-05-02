@@ -7,6 +7,7 @@ import cn.ubibi.jettyboot.framework.commons.scan.PackageScanner;
 import cn.ubibi.jettyboot.framework.rest.JettyBootServer;
 
 
+import net.sf.cglib.proxy.Enhancer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
