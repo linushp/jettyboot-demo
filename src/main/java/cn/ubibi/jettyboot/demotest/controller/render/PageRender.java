@@ -1,6 +1,7 @@
 package cn.ubibi.jettyboot.demotest.controller.render;
 
 import cn.ubibi.jettyboot.demotest.configs.SystemConfig;
+import cn.ubibi.jettyboot.framework.commons.ResponseUtils;
 import cn.ubibi.jettyboot.framework.commons.StringUtils;
 import cn.ubibi.jettyboot.framework.rest.ifs.ResponseRender;
 import org.thymeleaf.TemplateEngine;
@@ -125,8 +126,10 @@ public class PageRender implements ResponseRender {
         Map<String, Object> variables = objectToMap(this.pageData);
         ctx.setVariables(variables);
 
-        response.setCharacterEncoding("utf-8");
+
         templateEngine.process(this.template, ctx, response.getWriter());
+
+        ResponseUtils.tryClose(response);
     }
 
 }

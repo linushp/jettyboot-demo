@@ -2,8 +2,9 @@ package cn.ubibi.jettyboot.demotest.entity;
 
 public class BaseEntity {
 
-    public static final String aaaa = "adsfsfdds";
+    public String aaaa = "adsfsfdds122122";
     private String  id;
+    private String fdsfdsf ="aadddsfds";
 
     public String getId() {
         return id;
@@ -13,7 +14,19 @@ public class BaseEntity {
         this.id = id;
     }
 
-    public static String getAaaa() {
+    public String getAaaa() {
         return aaaa;
+    }
+
+    public void setAaaa(String aaaa) {
+        this.aaaa = aaaa;
+    }
+
+    public String getFdsfdsf() {
+        return fdsfdsf;
+    }
+
+    public void setFdsfdsf(String fdsfdsf) {
+        this.fdsfdsf = fdsfdsf;
     }
 }
