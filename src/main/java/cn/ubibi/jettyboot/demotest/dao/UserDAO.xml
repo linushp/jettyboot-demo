@@ -7,7 +7,10 @@
 
 
     <string id="findByUsername2">
-        select * from ${schemaTableName} where username = #{username}
+        <![CDATA[
+                select * from ${schemaTableName} where 1=1
+                and id = #{id}
+        ]]>
     </string>
 
     <string id="findByUsername3">
