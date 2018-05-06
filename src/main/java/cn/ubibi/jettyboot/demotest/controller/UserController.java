@@ -129,7 +129,7 @@ public class UserController {
 
         response.addCookie(cookie);
 
-        return userDAO.findById(uid);
+        return userDAO.findByUsername(uid);
     }
 
 
