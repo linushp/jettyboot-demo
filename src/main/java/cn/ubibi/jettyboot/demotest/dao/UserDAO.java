@@ -69,7 +69,7 @@ public class UserDAO extends MyDAO<UserEntity> {
 
         map.put("_conditions","id = #{username}");
 
-        return dataAccess.query(clazz, xmlString.getStringById("findByUsername3"), map);
+        return dataAccess.query(clazz, xmlString.getStringById("findByUsername2"), map);
     }
 
 
