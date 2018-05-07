@@ -41,7 +41,7 @@ public class UserDAO extends MyDAO<UserEntity> {
         Map<String, Object> condition = new HashMap<>();
         condition.put("name", username);
         condition.put("mid", sex);
-        return findByWhere(toWhereSqlAndArgs(condition));
+        return findByExample(condition);
     }
 
 

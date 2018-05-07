@@ -140,5 +140,11 @@ public class UserController {
     }
 
 
+    @DwrFunction
+    public String getUserInfoById(String id){
+        // UserController.getUserInfoById(123);
+        return "hello  " + id;
+    }
+
 
 }
