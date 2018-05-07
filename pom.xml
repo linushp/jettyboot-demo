@@ -68,8 +68,11 @@
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
-                    <include>**/*.xml</include>
+                    <include>**/*</include>
                 </includes>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
                 <filtering>true</filtering>
             </resource>
 
