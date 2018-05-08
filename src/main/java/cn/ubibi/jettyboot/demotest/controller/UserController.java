@@ -20,6 +20,7 @@ import java.util.Map;
 
 import cn.ubibi.jettyboot.framework.rest.annotation.*;
 import cn.ubibi.jettyboot.framework.rest.ifs.RequestParser;
+import com.alibaba.fastjson.JSONArray;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
 
@@ -141,9 +142,9 @@ public class UserController {
 
 
     @DwrFunction
-    public String getUserInfoById(String id){
+    public String getUserInfoById(JSONArray a, int b){
         // UserController.getUserInfoById(123);
-        return "hello  " + id;
+        return "result:  " + (a.toString()+b);
     }
 
 
