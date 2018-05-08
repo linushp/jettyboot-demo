@@ -142,10 +142,18 @@ public class UserController {
 
 
     @DwrFunction
-    public String getUserInfoById(Object a, int b, @AspectVariable CurrentUser currentUser){
+    public String getUserInfoById(Object a, Integer b, @AspectVariable CurrentUser currentUser){
         // UserController.getUserInfoById(123);
-        return "result:  " + (a.toString()+b);
+        return "getUserInfoById:  " + (a.toString()+b);
     }
+
+
+    @DwrFunction
+    public String getUserInfoByName(String name, @AspectVariable CurrentUser currentUser){
+        // UserController.getUserInfoById(123);
+        return "getUserInfoByName:  " + name;
+    }
+
 
 
 }
