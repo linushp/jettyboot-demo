@@ -142,7 +142,7 @@ public class UserController {
 
 
     @DwrFunction
-    public String getUserInfoById(JSONArray a, int b){
+    public String getUserInfoById(Object a, int b, @AspectVariable CurrentUser currentUser){
         // UserController.getUserInfoById(123);
         return "result:  " + (a.toString()+b);
     }
