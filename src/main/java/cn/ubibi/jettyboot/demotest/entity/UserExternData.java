@@ -12,7 +12,7 @@ public class UserExternData implements Convertible {
 
 
     @Override
-    public void convertFrom(Object object, Map<String, Object> map) {
+    public void convertFrom(Object object, Map<String, ?> map) {
         this.name1 = "luan";
         this.name2 = (String) map.get("name");
     }
