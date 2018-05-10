@@ -15,6 +15,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -149,7 +151,7 @@ public class UserController {
 
 
     @DwrFunction
-    public String getUserInfoByName(Double name, @AspectVariable CurrentUser currentUser){
+    public String getUserInfoByName(boolean name, @AspectVariable CurrentUser currentUser){
         // UserController.getUserInfoById(123);
         return "getUserInfoByName:  " + name;
     }
