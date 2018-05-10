@@ -29,7 +29,9 @@ import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
 
 
-@Controller({"/user","/vip"})
+//@Controller({"/user","/vip"})
+
+@DwrController
 public class UserController {
 
     private static Logger logger = Log.getLogger(UserController.class);
