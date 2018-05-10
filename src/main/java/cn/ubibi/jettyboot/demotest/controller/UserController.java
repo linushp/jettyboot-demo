@@ -153,7 +153,7 @@ public class UserController {
 
 
     @DwrFunction
-    public String getUserInfoByName(UserExternData name, @AspectVariable CurrentUser currentUser){
+    public String getUserInfoByName(String name, @AspectVariable CurrentUser currentUser){
         // UserController.getUserInfoById(123);
         return "getUserInfoByName:  " + name;
     }
