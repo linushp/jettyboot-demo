@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>hello</title>
+
+
+
 </head>
 <body>
 
@@ -12,9 +15,22 @@
 hello <b style="color: red"  th:text="${name}"> </b>  ,
 welcome 111
 
+<div id="xxx"></div>
 
-<script src="/script_dwr_controller?controllers=UserController;DwrTestController"></script>
-<script src="/public/xx.js"></script>
+<script>
+
+    function loadJavascript(url,callback) {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = url;
+        document.documentElement.appendChild(script);
+    }
+
+    loadJavascript("/script_dwr_controller?controllers=UserController;DwrTestController");
+    loadJavascript("/public/xx.js");
+
+</script>
+
 
 </body>
 </html>

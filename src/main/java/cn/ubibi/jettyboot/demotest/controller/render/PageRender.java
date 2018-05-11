@@ -47,10 +47,7 @@ public class PageRender implements ResponseRender {
 
     private static FileTemplateResolver getFileTemplateResolver() {
 
-        URL classLoaderResource = PageRender.class.getClassLoader().getResource("");
-        String classPath = StringUtils.appendIfNotEnd(classLoaderResource.getPath(), File.separator);
-        String srcResPath = classPath + ("../../src/main/resources".replace("/", File.separator));
-
+        String srcResPath = SystemConfig.getInstance().getSrcbase() + "/main/resources";
 
         FileTemplateResolver templateResolver = new FileTemplateResolver();
 

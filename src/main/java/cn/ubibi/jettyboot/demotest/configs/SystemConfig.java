@@ -9,6 +9,7 @@ public class SystemConfig {
     }
 
 
+    private String srcbase;
 
     private boolean dev = false;
 
@@ -18,5 +19,13 @@ public class SystemConfig {
 
     public void setDev(boolean dev) {
         this.dev = dev;
+    }
+
+    public String getSrcbase() {
+        return srcbase;
+    }
+
+    public void setSrcbase(String srcbase) {
+        this.srcbase = srcbase;
     }
 }
