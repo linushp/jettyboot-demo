@@ -3,7 +3,7 @@ package cn.ubibi.jettyboot.demotest.components;
 import cn.ubibi.jettyboot.demotest.controller.parser.CurrentUser;
 import cn.ubibi.jettyboot.framework.rest.ControllerRequest;
 import cn.ubibi.jettyboot.framework.rest.annotation.Component;
-import cn.ubibi.jettyboot.framework.rest.ifs.ControllerInterceptor;
+import cn.ubibi.jettyboot.framework.rest.ifs.ControllerAspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,13 +11,12 @@ import java.lang.reflect.Method;
 
 
 @Component
-public class MyRequestAspect implements ControllerInterceptor {
+public class MyRequestAspect implements ControllerAspect {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ControllerInterceptor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ControllerAspect.class);
 
     public void invokeBefore(Method method, ControllerRequest request) throws Exception {
 
-        request.getServletResponse().setHeader("Server", "boot " + System.currentTimeMillis());
         request.getServletResponse().setCharacterEncoding("utf-8");
         request.getServletRequest().setCharacterEncoding("utf-8");
 
