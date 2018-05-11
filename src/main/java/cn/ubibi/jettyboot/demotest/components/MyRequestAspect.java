@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
 @Component
 public class MyRequestAspect implements ControllerAspect {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ControllerAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyRequestAspect.class);
 
     public void invokeBefore(Method method, ControllerRequest request) throws Exception {
 
