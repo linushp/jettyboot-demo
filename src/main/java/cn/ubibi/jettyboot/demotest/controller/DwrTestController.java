@@ -56,8 +56,8 @@ public class DwrTestController {
 
 
     @DwrFunction
-    public int testMap(Map<String,String> map, JSONObject jsonObject, Set<Integer> integers){
-        String a = map.get("a");
+    public int testMap(Map<String,Map<String,String>> map, JSONObject jsonObject, Set<Integer> integers){
+        Map<String, String> a = map.get("a");
         return map.size() + jsonObject.size() + integers.size();
     }
 
