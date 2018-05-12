@@ -9,9 +9,7 @@ import cn.ubibi.jettyboot.framework.rest.annotation.DwrController;
 import cn.ubibi.jettyboot.framework.rest.annotation.DwrFunction;
 import com.alibaba.fastjson.JSONObject;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @DwrController
 public class DwrTestController {
@@ -56,8 +54,10 @@ public class DwrTestController {
 
 
     @DwrFunction
-    public int testMap(Map<String,Map<String,String>> map, JSONObject jsonObject, Set<Integer> integers){
-        Map<String, String> a = map.get("a");
+    public int testMap(Map<String,Map<String,Queue<Integer>>> map, JSONObject jsonObject, Set<Integer> integers){
+        Map<String, Queue<Integer>> a = map.get("a");
+        Queue<Integer> m = a.get("m");
+        m.add(323);
         return map.size() + jsonObject.size() + integers.size();
     }
 
