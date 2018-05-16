@@ -3,6 +3,7 @@ package cn.ubibi.jettyboot.demotest.dao.base;
 import cn.ubibi.jettyboot.framework.commons.PropertiesUtils;
 import cn.ubibi.jettyboot.framework.jdbc.DataAccess;
 import cn.ubibi.jettyboot.framework.jdbc.ConnectionFactory;
+import cn.ubibi.jettyboot.framework.jdbc.model.SingleConnectionFactory;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +66,7 @@ public class MyConnectionFactory implements ConnectionFactory {
 
             this.dataSource = dataSource;
             Connection conn = this.dataSource.getConnection();
-            DataAccess dataAccess = DataAccess.use(conn);
+            DataAccess dataAccess = new DataAccess(new SingleConnectionFactory(conn));
             Object m = dataAccess.queryValue("SELECT now()");
             LOGGER.info("SELECT now():" + m.toString());
         } catch (Exception e) {

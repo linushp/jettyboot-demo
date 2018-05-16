@@ -6,6 +6,7 @@ import cn.ubibi.jettyboot.framework.commons.StringUtils;
 import cn.ubibi.jettyboot.framework.commons.model.Page;
 import cn.ubibi.jettyboot.framework.commons.xmlstring.XmlString;
 import cn.ubibi.jettyboot.framework.jdbc.model.SqlNdArgs;
+import cn.ubibi.jettyboot.framework.jdbc.utils.TransactionUtil;
 import cn.ubibi.jettyboot.framework.rest.annotation.Service;
 
 import java.util.ArrayList;
@@ -62,14 +63,24 @@ public class UserDAO extends MyDAO<UserEntity> {
 
     public List<UserEntity> findByUsername(String username) throws Exception {
 
-        Map<String, Object> map = new HashMap<>();
+        try {
+            TransactionUtil.beginTransaction(this);
 
-        map.put("username", username);
-        map.put("schemaTableName", schemaTableName());
+            Map<String, Object> map = new HashMap<>();
 
-        map.put("_conditions","id = #{username}");
+            map.put("username", username);
+            map.put("schemaTableName", schemaTableName());
 
-        return dataAccess.query(clazz, xmlString.getStringById("findByUsername2"), map);
+            map.put("_conditions","id = #{username}");
+
+            return dataAccess.query(clazz, xmlString.getStringById("findByUsername2"), map);
+
+        }catch (Exception e){
+            TransactionUtil.rollbackTransaction();
+        }finally {
+            TransactionUtil.endTransaction();
+        }
+        return null;
     }
 
 
