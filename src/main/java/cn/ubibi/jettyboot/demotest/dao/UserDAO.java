@@ -63,8 +63,9 @@ public class UserDAO extends MyDAO<UserEntity> {
 
     public List<UserEntity> findByUsername(String username) throws Exception {
 
+        TransactionUtil.beginTransaction(dataAccess.getConnectionFactory());
+
         try {
-            TransactionUtil.beginTransaction(this);
 
             Map<String, Object> map = new HashMap<>();
 
@@ -73,7 +74,11 @@ public class UserDAO extends MyDAO<UserEntity> {
 
             map.put("_conditions","id = #{username}");
 
+
             return dataAccess.query(clazz, xmlString.getStringById("findByUsername2"), map);
+
+            //TransactionUtil.commitTransaction();
+
 
         }catch (Exception e){
             TransactionUtil.rollbackTransaction();
