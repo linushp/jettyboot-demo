@@ -1,12 +1,13 @@
 package cn.ubibi.jettyboot.demotest.components;
 
 import cn.ubibi.jettyboot.demotest.controller.parser.CurrentUser;
-import cn.ubibi.jettyboot.framework.rest.ControllerRequest;
 import cn.ubibi.jettyboot.framework.rest.annotation.Component;
 import cn.ubibi.jettyboot.framework.rest.ifs.ControllerAspect;
+import cn.ubibi.jettyboot.framework.rest.ifs.HttpParsedRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 
@@ -15,10 +16,9 @@ public class MyRequestAspect implements ControllerAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MyRequestAspect.class);
 
-    public void invokeBefore(Method method, ControllerRequest request) throws Exception {
+    public void beforeInvoke(Method method, HttpParsedRequest request) throws Exception {
 
-        request.getServletResponse().setCharacterEncoding("utf-8");
-        request.getServletRequest().setCharacterEncoding("utf-8");
+        request.setCharacterEncoding("utf-8");
 
 
         LOGGER.info(method.getName());
@@ -29,9 +29,16 @@ public class MyRequestAspect implements ControllerAspect {
         request.setAspectVariable("currentUser", new CurrentUser(token));
     }
 
-
-    public void invokeAfter(Method method, ControllerRequest request, Object invokeResult) throws Exception {
+    @Override
+    public void afterInvoke(Method method, HttpParsedRequest request, Object invokeResult, HttpServletResponse response) throws Exception {
+        response.setCharacterEncoding("utf-8");
         LOGGER.info(request.getPathInfo() + ":::::::::" + method.getDeclaringClass().getName() + "."+ method.getName());
     }
+
+    @Override
+    public void afterRender(Method method, HttpParsedRequest request, Object invokeResult, HttpServletResponse response) {
+
+    }
+
 
 }

@@ -1,18 +1,38 @@
-import cn.ubibi.jettyboot.demotest.configs.SystemConfig;
-import cn.ubibi.jettyboot.framework.commons.StringUtils;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class TempTest {
-    public static void main(String [] args){
+    public static void exeCmd(String commandStr) {
+        BufferedReader br = null;
+        try {
+            Process p = Runtime.getRuntime().exec(commandStr);
+            p.waitFor();
+            br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line = null;
+            StringBuilder sb = new StringBuilder();
+            while ((line = br.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            System.out.println(sb.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if (br != null)
+            {
+                try {
+                    br.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
-        String str = "[1,2,3]";
-
-        List x = JSON.parseObject(str, JSONArray.class);
-
-
-        System.out.println(x);
+    public static void main(String[] args) {
+        String commandStr = "ping www.taobao.com";
+        //String commandStr = "ipconfig";
+        TempTest.exeCmd(commandStr);
     }
 }

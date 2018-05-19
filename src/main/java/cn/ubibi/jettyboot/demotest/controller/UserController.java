@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.ubibi.jettyboot.framework.rest.annotation.*;
+import cn.ubibi.jettyboot.framework.rest.ifs.HttpParsedRequest;
 import cn.ubibi.jettyboot.framework.rest.ifs.RequestParser;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -39,13 +40,13 @@ public class UserController {
 
 
     @GetMapping("/helloworld/:name")
-    public String helloworld(ControllerRequest request, @PathVariable("name") String name) {
+    public String helloworld(HttpParsedRequest request, @PathVariable("name") String name) {
         return "hello world : vip " + isVip(request) + " name " + name;
     }
 
 
-    private boolean isVip(ControllerRequest request) {
-        String target = request.getTargetPath();
+    private boolean isVip(HttpParsedRequest request) {
+        String target = request.getMatchedControllerPath();
         if (target.startsWith("/vip")) {
             return true;
         }
@@ -90,7 +91,7 @@ public class UserController {
 
 
     @GetMapping("/test")
-    public String getmm(UserInfoParser reqParser, ControllerRequest request, CurrentUser currentUser) throws Exception {
+    public String getmm(UserInfoParser reqParser, HttpParsedRequest request, CurrentUser currentUser) throws Exception {
         new UserDAO().findAll();
         if (reqParser instanceof RequestParser) {
             System.out.println("111");
@@ -118,10 +119,10 @@ public class UserController {
 
 
     @GetMapping(value = "/:uid")
-    public Object getUserById(ControllerRequest params, HttpServletResponse response) throws Exception {
+    public Object getUserById(HttpParsedRequest params, HttpServletResponse response) throws Exception {
 
         String uid = params.getPathVariable("uid");
-        String name = params.getRequestParam("name", "");
+        String name = params.getParameter("name");
 
         String[] names = params.getParameterValues("name");
 
@@ -134,7 +135,7 @@ public class UserController {
 
 
     @PostMapping("/new/:uid")
-    public String getUserById2(ControllerRequest request) throws IOException, ServletException {
+    public String getUserById2(HttpParsedRequest request) throws IOException, ServletException {
         String aaa = request.getContextPath();
         return "123saaa";
     }
