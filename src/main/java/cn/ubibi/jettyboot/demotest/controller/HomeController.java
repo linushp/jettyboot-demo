@@ -4,7 +4,6 @@ import cn.ubibi.jettyboot.framework.rest.annotation.Controller;
 import cn.ubibi.jettyboot.framework.rest.annotation.GetMapping;
 import cn.ubibi.jettyboot.framework.rest.ifs.HttpParsedRequest;
 
-import java.util.Base64;
 
 @Controller({"/","/home","/index","welcome","w1","w2","w3","w4","w5","w6","w7","w8","w9","w10"})
 public class HomeController {
