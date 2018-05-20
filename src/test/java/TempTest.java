@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
+import java.util.Base64;
 
 public class TempTest {
     public static void exeCmd(String commandStr) {
@@ -31,8 +33,14 @@ public class TempTest {
     }
 
     public static void main(String[] args) {
-        String commandStr = "ping www.taobao.com";
+
+        BigInteger integer = new BigInteger("-128");
+        byte[] byteArray = integer.toByteArray();
+
+        Base64.getDecoder().decode("");
+        System.out.println(byteArray);
+//        String commandStr = "ping www.taobao.com";
         //String commandStr = "ipconfig";
-        TempTest.exeCmd(commandStr);
+//        TempTest.exeCmd(commandStr);
     }
 }
