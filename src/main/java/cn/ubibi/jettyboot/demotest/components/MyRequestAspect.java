@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
 
 
@@ -18,6 +19,11 @@ public class MyRequestAspect implements ControllerAspect {
 
     public void beforeInvoke(Method method, HttpParsedRequest request) throws Exception {
 
+        HttpSession session = request.getSession();
+        Object aaa = session.getAttribute("aaaa");
+
+
+        session.setAttribute("aaaa",System.currentTimeMillis());
         request.setCharacterEncoding("utf-8");
 
 
