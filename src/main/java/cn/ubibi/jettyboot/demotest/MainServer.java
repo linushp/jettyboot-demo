@@ -5,9 +5,11 @@ import cn.ubibi.jettyboot.demotest.dao.base.MyConnectionFactory;
 import cn.ubibi.jettyboot.framework.rest.JettyBootServer;
 
 
-import org.eclipse.jetty.server.session.SessionHandler;
+import org.eclipse.jetty.server.session.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.sql.DataSource;
 
 
 public class MainServer {
@@ -25,10 +27,25 @@ public class MainServer {
         JettyBootServer server = new JettyBootServer(8001);
 
         server.setControllerContext("/");
-
         server.setServerName("MainServer");
+        server.addBean(new NullSessionCacheFactory());
+        server.addBean(getJDBCSessionDataStoreFactory());
+
         server.doScanPackage(MainServer.class);
         server.startAndJoin();
+    }
+
+
+    private static JDBCSessionDataStoreFactory getJDBCSessionDataStoreFactory() {
+
+        DataSource dataSource = MyConnectionFactory.getInstance().getDataSource();
+
+        JDBCSessionDataStoreFactory jdbcSessionDataStoreFactory = new JDBCSessionDataStoreFactory();
+        DatabaseAdaptor databaseAdaptor = new DatabaseAdaptor();
+        databaseAdaptor.setDatasource(dataSource);
+        jdbcSessionDataStoreFactory.setDatabaseAdaptor(databaseAdaptor);
+
+        return jdbcSessionDataStoreFactory;
     }
 
 }

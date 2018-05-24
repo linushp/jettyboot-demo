@@ -22,8 +22,11 @@ public class MyRequestAspect implements ControllerAspect {
         HttpSession session = request.getSession();
         Object aaa = session.getAttribute("aaaa");
 
+        HttpSession session2 = request.getSession();
 
-        session.setAttribute("aaaa",System.currentTimeMillis());
+        Object aaa2= session2.getAttribute("aaaa");
+
+        session.setAttribute("aaaa","12345");
         request.setCharacterEncoding("utf-8");
 
 

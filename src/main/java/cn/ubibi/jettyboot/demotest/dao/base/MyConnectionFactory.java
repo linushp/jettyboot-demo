@@ -75,6 +75,10 @@ public class MyConnectionFactory implements ConnectionFactory {
     }
 
 
+    public DataSource getDataSource(){
+        return dataSource;
+    }
+
     @Override
     public Connection getConnection() throws SQLException {
         return dataSource.getConnection();
