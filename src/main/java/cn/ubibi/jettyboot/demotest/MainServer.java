@@ -1,5 +1,6 @@
 package cn.ubibi.jettyboot.demotest;
 
+import cn.ubibi.jettyboot.demotest.components.MyRequestAspect;
 import cn.ubibi.jettyboot.demotest.controller.render.PageRender;
 import cn.ubibi.jettyboot.demotest.dao.base.MyConnectionFactory;
 import cn.ubibi.jettyboot.framework.rest.JettyBootServer;
@@ -22,6 +23,8 @@ public class MainServer {
 
 
         JettyBootServer server = new JettyBootServer();
+        server.setContext("/");
+        server.setServerName("MainServer");
         server.doScanPackage(MainServer.class);
         server.listen(8001);
     }
