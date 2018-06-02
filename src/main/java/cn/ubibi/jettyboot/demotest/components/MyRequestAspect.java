@@ -1,5 +1,6 @@
 package cn.ubibi.jettyboot.demotest.components;
 
+import cn.ubibi.jettyboot.demotest.configs.SystemConfig;
 import cn.ubibi.jettyboot.demotest.controller.parser.CurrentUser;
 import cn.ubibi.jettyboot.framework.rest.annotation.Component;
 import cn.ubibi.jettyboot.framework.rest.ifs.ControllerAspect;

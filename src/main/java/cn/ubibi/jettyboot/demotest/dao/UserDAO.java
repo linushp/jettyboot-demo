@@ -6,9 +6,11 @@ import cn.ubibi.jettyboot.framework.commons.StringUtils;
 import cn.ubibi.jettyboot.framework.commons.model.Page;
 import cn.ubibi.jettyboot.framework.commons.xmlstring.XmlString;
 import cn.ubibi.jettyboot.framework.jdbc.model.SqlNdArgs;
+import cn.ubibi.jettyboot.framework.jdbc.utils.ResultSetParser;
 import cn.ubibi.jettyboot.framework.jdbc.utils.TransactionUtil;
 import cn.ubibi.jettyboot.framework.rest.annotation.Service;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +26,24 @@ public class UserDAO extends MyDAO<UserEntity> {
 
     public UserDAO() throws Exception {
         super(UserEntity.class, "m_monster_item");
+        super.setResultSetParser(new ResultSetParser<UserEntity>() {
+
+            @Override
+            public List<UserEntity> parseResultSet(ResultSet resultSet) throws Exception {
+
+                List<UserEntity> result = new ArrayList<>();
+                while (resultSet.next()){
+                    UserEntity userEntity = new UserEntity();
+
+                    userEntity.setName(resultSet.getString("name"));
+
+
+                    result.add(userEntity);
+                }
+                return result;
+            }
+
+        });
         this.xmlString = new XmlString(this);
     }
 
