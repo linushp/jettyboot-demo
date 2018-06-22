@@ -1,21 +1,20 @@
 package cn.ubibi.jettyboot.demotest.entity;
 
-import cn.ubibi.jettyboot.framework.commons.ifs.Convertible;
 
 import java.util.Map;
 
-public class UserExternData implements Convertible {
+public class UserExternData {
 
 
     private String name1;
     private String name2;
 
 
-    @Override
-    public void convertFrom(Object object, Map<String, ?> map) {
-        this.name1 = "luan";
-        this.name2 = (String) map.get("name");
-    }
+//    @Override
+//    public void convertFrom(Object object, Map<String, ?> map) {
+//        this.name1 = "luan";
+//        this.name2 = (String) map.get("name");
+//    }
 
 
     public String getName1() {

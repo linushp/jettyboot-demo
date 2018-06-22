@@ -40,7 +40,11 @@ public class UserController {
 
 
     @GetMapping("/helloworld/:name")
-    public String helloworld(HttpParsedRequest request, @PathVariable("name") String name) {
+    @Cache(cacheKey = "user/helloworld", paramKey = {0})
+    public String helloworld(@PathVariable("name") String name,HttpParsedRequest request) throws Exception {
+
+        userDAO.findByUsername(name);
+
         return "hello world : vip " + isVip(request) + " name " + name;
     }
 
@@ -52,6 +56,7 @@ public class UserController {
         }
         return false;
     }
+
 
 
     @GetMapping("/test_page")

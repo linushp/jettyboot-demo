@@ -7,7 +7,9 @@ import cn.ubibi.jettyboot.framework.commons.model.Page;
 import cn.ubibi.jettyboot.framework.commons.xmlstring.XmlString;
 import cn.ubibi.jettyboot.framework.jdbc.model.SqlNdArgs;
 import cn.ubibi.jettyboot.framework.jdbc.utils.ResultSetParser;
+import cn.ubibi.jettyboot.framework.jdbc.utils.ResultSetUtils;
 import cn.ubibi.jettyboot.framework.jdbc.utils.TransactionUtil;
+import cn.ubibi.jettyboot.framework.rest.annotation.Cache;
 import cn.ubibi.jettyboot.framework.rest.annotation.Service;
 
 import java.sql.ResultSet;
@@ -20,30 +22,13 @@ import java.util.regex.Pattern;
 
 
 @Service
-public class UserDAO extends MyDAO<UserEntity> {
+public class UserDAO extends MyDAO<UserEntity> implements ResultSetParser<UserEntity> {
 
     private XmlString xmlString;
 
     public UserDAO() throws Exception {
         super(UserEntity.class, "m_monster_item");
-        super.setResultSetParser(new ResultSetParser<UserEntity>() {
-
-            @Override
-            public List<UserEntity> parseResultSet(ResultSet resultSet) throws Exception {
-
-                List<UserEntity> result = new ArrayList<>();
-                while (resultSet.next()){
-                    UserEntity userEntity = new UserEntity();
-
-                    userEntity.setName(resultSet.getString("name"));
-
-
-                    result.add(userEntity);
-                }
-                return result;
-            }
-
-        });
+        super.setResultSetParser(this);
         this.xmlString = new XmlString(this);
     }
 
@@ -92,7 +77,7 @@ public class UserDAO extends MyDAO<UserEntity> {
             map.put("username", username);
             map.put("schemaTableName", schemaTableName());
 
-            map.put("_conditions","id = #{username}");
+            map.put("_conditions", "id = #{username}");
 
 
             return dataAccess.query(clazz, xmlString.getStringById("findByUsername2"), map);
@@ -100,13 +85,18 @@ public class UserDAO extends MyDAO<UserEntity> {
             //TransactionUtil.commitTransaction();
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             TransactionUtil.rollbackTransaction();
-        }finally {
+        } finally {
             TransactionUtil.endTransaction();
         }
         return null;
     }
 
+
+    @Override
+    public List<UserEntity> parseResultSet(ResultSet resultSet) throws Exception {
+        return ResultSetUtils.resultSetToEntityList(resultSet, UserEntity.class);
+    }
 
 }
