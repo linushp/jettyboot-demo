@@ -1,6 +1,8 @@
 package cn.ubibi.jettyboot.demotest.controller.render;
 
 import cn.ubibi.jettyboot.demotest.configs.SystemConfig;
+import cn.ubibi.jettyboot.framework.commons.BeanField;
+import cn.ubibi.jettyboot.framework.commons.BeanFieldUtils;
 import cn.ubibi.jettyboot.framework.commons.ResponseUtils;
 import cn.ubibi.jettyboot.framework.commons.StringUtils;
 import cn.ubibi.jettyboot.framework.rest.ifs.ResponseRender;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PageRender implements ResponseRender {
@@ -86,8 +89,9 @@ public class PageRender implements ResponseRender {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
-        Field[] declaredFields = obj.getClass().getDeclaredFields();
-        for (Field field : declaredFields) {
+        List<BeanField> declaredFields = BeanFieldUtils.getBeanFields(obj.getClass());
+        for (BeanField beanField : declaredFields) {
+            Field field = beanField.getField();
             field.setAccessible(true);
             try {
                 map.put(field.getName(), field.get(obj));
@@ -97,6 +101,7 @@ public class PageRender implements ResponseRender {
         }
 
         return map;
+
     }
 
 
