@@ -5,20 +5,15 @@ import cn.ubibi.jettyboot.demotest.entity.UserEntity;
 import cn.ubibi.jettyboot.framework.commons.StringUtils;
 import cn.ubibi.jettyboot.framework.commons.model.Page;
 import cn.ubibi.jettyboot.framework.commons.xmlstring.XmlString;
-import cn.ubibi.jettyboot.framework.jdbc.model.SqlNdArgs;
 import cn.ubibi.jettyboot.framework.jdbc.utils.ResultSetParser;
 import cn.ubibi.jettyboot.framework.jdbc.utils.ResultSetUtils;
 import cn.ubibi.jettyboot.framework.jdbc.utils.TransactionUtil;
-import cn.ubibi.jettyboot.framework.rest.annotation.Cache;
 import cn.ubibi.jettyboot.framework.rest.annotation.Service;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 @Service

@@ -5,27 +5,21 @@ import cn.ubibi.jettyboot.demotest.controller.parser.UserInfoParser;
 import cn.ubibi.jettyboot.demotest.controller.render.PageRender;
 import cn.ubibi.jettyboot.demotest.dao.UserDAO;
 import cn.ubibi.jettyboot.demotest.entity.UserEntity;
-import cn.ubibi.jettyboot.demotest.entity.UserExternData;
 import cn.ubibi.jettyboot.framework.commons.model.Page;
 import cn.ubibi.jettyboot.framework.ioc.Autowired;
 import cn.ubibi.jettyboot.framework.jdbc.model.UpdateResult;
-import cn.ubibi.jettyboot.framework.rest.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
 import cn.ubibi.jettyboot.framework.rest.annotation.*;
 import cn.ubibi.jettyboot.framework.rest.ifs.HttpParsedRequest;
 import cn.ubibi.jettyboot.framework.rest.ifs.RequestParser;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
 
@@ -40,7 +34,7 @@ public class UserController {
 
 
     @GetMapping("/helloworld/:name")
-    @Cache(cacheKey = "user/helloworld", paramKey = {0})
+    @MapCache(cacheKey = "user/helloworld", paramKey = {0})
     public String helloworld(@PathVariable("name") String name,HttpParsedRequest request) throws Exception {
 
         userDAO.findByUsername(name);
