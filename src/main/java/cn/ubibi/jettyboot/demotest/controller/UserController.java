@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.ubibi.jettyboot.framework.rest.annotation.*;
@@ -37,7 +38,7 @@ public class UserController {
     @MapCache(cacheKey = "user/helloworld", paramKey = {0})
     public String helloworld(@PathVariable("name") String name,HttpParsedRequest request) throws Exception {
 
-        userDAO.findByUsername(name);
+        List<UserEntity> ss = userDAO.findByUsername(name);
 
         return "hello world : vip " + isVip(request) + " name " + name;
     }
