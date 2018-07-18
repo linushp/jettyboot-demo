@@ -5,6 +5,7 @@ import cn.ubibi.jettyboot.demotest.controller.parser.UserInfoParser;
 import cn.ubibi.jettyboot.demotest.controller.render.PageRender;
 import cn.ubibi.jettyboot.demotest.dao.UserDAO;
 import cn.ubibi.jettyboot.demotest.entity.UserEntity;
+import cn.ubibi.jettyboot.framework.commons.cache.MapCache;
 import cn.ubibi.jettyboot.framework.commons.model.Page;
 import cn.ubibi.jettyboot.framework.ioc.Autowired;
 import cn.ubibi.jettyboot.framework.jdbc.model.UpdateResult;
