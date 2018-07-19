@@ -10,6 +10,7 @@ import cn.ubibi.jettyboot.framework.commons.model.Page;
 import cn.ubibi.jettyboot.framework.ioc.Autowired;
 import cn.ubibi.jettyboot.framework.jdbc.model.UpdateResult;
 
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -59,11 +60,16 @@ public class UserController {
     public PageRender getmm212_page(@RequestParam("name") String name, @AspectVariable CurrentUser currentUser) throws Exception {
         Map<String, String> map = new HashMap<>();
         map.put("name", name + "__" + this.getClass().getClassLoader().getClass().getName() + "___" + currentUser.getName());
+
+        System.out.println("getmm212_page");
+        Thread.sleep(5000);
         return new PageRender("test.html", map);
     }
 
 
     @GetMapping("/test_insert2")
+    @AsyncMergeCall(paramKey = {0})
+    @CacheMethod(paramKey = {0})
     public UpdateResult getmm212(@RequestParam("name") String name) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("name", name);

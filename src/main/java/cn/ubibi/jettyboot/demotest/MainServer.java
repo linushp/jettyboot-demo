@@ -1,16 +1,32 @@
 package cn.ubibi.jettyboot.demotest;
 
 import cn.ubibi.jettyboot.demotest.controller.render.PageRender;
+import cn.ubibi.jettyboot.demotest.core.AsyncContextTaskManager;
+import cn.ubibi.jettyboot.demotest.core.MethodInvokeCallable;
 import cn.ubibi.jettyboot.demotest.dao.base.MyConnectionFactory;
+import cn.ubibi.jettyboot.demotest.service.TestService;
 import cn.ubibi.jettyboot.framework.commons.FrameworkConfig;
 import cn.ubibi.jettyboot.framework.rest.JettyBootServer;
 
 
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.session.*;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
+import org.eclipse.jetty.util.thread.ThreadPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.AsyncContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.io.IOException;
+import java.util.concurrent.Callable;
 
 
 public class MainServer {
@@ -30,12 +46,39 @@ public class MainServer {
 
         server.setControllerContext("/");
         server.setServerName("MainServer");
-        server.addBean(new NullSessionCacheFactory());
-        server.addBean(getJDBCSessionDataStoreFactory());
+//        server.addBean(new NullSessionCacheFactory());
+//        server.addBean(getJDBCSessionDataStoreFactory());
 
         server.doScanPackage(MainServer.class);
+
+
+        TestService testService = new TestService();
+
+
+        server.addHandler(new AbstractHandler() {
+            @Override
+            public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+                if (target.equals("/async_test")){
+
+                    System.out.println("async_test");
+
+                    AsyncContext asyncContext = request.startAsync(request,response);
+                    Callable callable = new MethodInvokeCallable(testService,"testLongTime");
+                    AsyncContextTaskManager.addTask("async_test",asyncContext,callable);
+
+                    baseRequest.setHandled(true);
+                }
+            }
+        });
+
+
+        ServerConnector connector = new ServerConnector(server);
+        connector.setAcceptQueueSize(100);
+        connector.setPort(8001);
+        server.setConnectors(new Connector[] { connector });
         server.startAndJoin();
     }
+
 
 
     private static JDBCSessionDataStoreFactory getJDBCSessionDataStoreFactory() {
