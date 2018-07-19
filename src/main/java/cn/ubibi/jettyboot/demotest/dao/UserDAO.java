@@ -65,30 +65,15 @@ public class UserDAO extends MyDAO<UserEntity> implements ResultSetParser<UserEn
 
     @Transactional
     public List<UserEntity> findByUsername(String username) throws Exception {
+        Map<String, Object> map = new HashMap<>();
 
-        TransactionUtil.beginTransaction(dataAccess.getConnectionFactory());
+        map.put("username", username);
+        map.put("schemaTableName", schemaTableName());
 
-        try {
+        map.put("_conditions", "id = #{username}");
 
-            Map<String, Object> map = new HashMap<>();
+        return dataAccess.query(clazz, xmlString.getStringById("findByUsername2"), map);
 
-            map.put("username", username);
-            map.put("schemaTableName", schemaTableName());
-
-            map.put("_conditions", "id = #{username}");
-
-
-            return dataAccess.query(clazz, xmlString.getStringById("findByUsername2"), map);
-
-            //TransactionUtil.commitTransaction();
-
-
-        } catch (Exception e) {
-            TransactionUtil.rollbackTransaction();
-        } finally {
-            TransactionUtil.endTransaction();
-        }
-        return null;
     }
 
 
