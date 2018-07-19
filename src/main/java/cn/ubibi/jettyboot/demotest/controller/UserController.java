@@ -5,7 +5,6 @@ import cn.ubibi.jettyboot.demotest.controller.parser.UserInfoParser;
 import cn.ubibi.jettyboot.demotest.controller.render.PageRender;
 import cn.ubibi.jettyboot.demotest.dao.UserDAO;
 import cn.ubibi.jettyboot.demotest.entity.UserEntity;
-import cn.ubibi.jettyboot.framework.commons.StringUtils;
 import cn.ubibi.jettyboot.framework.commons.cache.CacheMethod;
 import cn.ubibi.jettyboot.framework.commons.model.Page;
 import cn.ubibi.jettyboot.framework.ioc.Autowired;
@@ -67,7 +66,8 @@ public class UserController {
 
 
     @GetMapping("/hello22")
-    @AsyncMergeCall
+    @AsyncMergeMethod
+    @CacheMethod
     public String hello22() throws InterruptedException {
         Thread.sleep(10000);
         return "ok222";
@@ -110,7 +110,7 @@ public class UserController {
 
 
     @GetMapping("/test_insert2")
-    @AsyncMergeCall(paramKey = {0})
+    @AsyncMergeMethod(paramKey = {0})
     @CacheMethod(paramKey = {0})
     public UpdateResult getmm212(@RequestParam("name") String name) throws Exception {
         Map<String, Object> map = new HashMap<>();

@@ -46,30 +46,10 @@ public class MainServer {
 
         server.setControllerContext("/");
         server.setServerName("MainServer");
-//        server.addBean(new NullSessionCacheFactory());
-//        server.addBean(getJDBCSessionDataStoreFactory());
+        server.addBean(new NullSessionCacheFactory());
+        server.addBean(getJDBCSessionDataStoreFactory());
 
         server.doScanPackage(MainServer.class);
-
-
-        TestService testService = new TestService();
-
-
-        server.addHandler(new AbstractHandler() {
-            @Override
-            public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-                if (target.equals("/async_test")){
-
-                    System.out.println("async_test");
-
-                    AsyncContext asyncContext = request.startAsync(request,response);
-                    Callable callable = new MethodInvokeCallable(testService,"testLongTime");
-                    AsyncContextTaskManager.addTask("async_test",asyncContext,callable);
-
-                    baseRequest.setHandled(true);
-                }
-            }
-        });
 
 
         ServerConnector connector = new ServerConnector(server);
@@ -78,6 +58,7 @@ public class MainServer {
         server.setConnectors(new Connector[] { connector });
         server.startAndJoin();
     }
+
 
 
 
