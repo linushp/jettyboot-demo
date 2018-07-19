@@ -5,6 +5,7 @@ import cn.ubibi.jettyboot.demotest.controller.parser.UserInfoParser;
 import cn.ubibi.jettyboot.demotest.controller.render.PageRender;
 import cn.ubibi.jettyboot.demotest.dao.UserDAO;
 import cn.ubibi.jettyboot.demotest.entity.UserEntity;
+import cn.ubibi.jettyboot.framework.commons.StringUtils;
 import cn.ubibi.jettyboot.framework.commons.cache.CacheMethod;
 import cn.ubibi.jettyboot.framework.commons.model.Page;
 import cn.ubibi.jettyboot.framework.ioc.Autowired;
@@ -23,6 +24,8 @@ import java.util.Map;
 import cn.ubibi.jettyboot.framework.rest.annotation.*;
 import cn.ubibi.jettyboot.framework.rest.ifs.HttpParsedRequest;
 import cn.ubibi.jettyboot.framework.rest.ifs.RequestParser;
+import cn.ubibi.jettyboot.framework.rest.impl.ResultRenderMisc;
+import cn.ubibi.jettyboot.framework.rest.impl.VoidResult;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
 
@@ -34,6 +37,45 @@ public class UserController {
 
     @Autowired
     private UserDAO userDAO;
+
+
+
+    @GetMapping("/hello11")
+    public VoidResult hello11(HttpParsedRequest request,HttpServletResponse response){
+
+        AsyncContext aa = request.startAsync();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+
+                    ResultRenderMisc.doRender("ok",request,response);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                aa.complete();
+            }
+        }).start();
+
+        System.out.println("111");
+        return new VoidResult();
+    }
+
+
+    @GetMapping("/hello22")
+    @AsyncMergeCall
+    public String hello22() throws InterruptedException {
+        Thread.sleep(10000);
+        return "ok222";
+    }
+
+
+
+
 
 
     @GetMapping("/helloworld/:name")

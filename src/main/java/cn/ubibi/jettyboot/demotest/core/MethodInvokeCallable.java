@@ -13,11 +13,11 @@ public class MethodInvokeCallable implements Callable {
 	private Method method;
 	private Object[] objects;
 	private Object target;
-	public MethodInvokeCallable(Object target, String methodName, Object ...params) throws Exception {
+	public MethodInvokeCallable(Object target, String methodName, Object ...params) {
 		Method method = ClassMethodFindUtils.findMethod(target, methodName, params);
 		if(method == null) {
 			logger.error("can not find " + this.toString());
-			throw new Exception("can not find" + target.getClass().getSimpleName()+ "." + methodName);
+//			throw new Exception("can not find" + target.getClass().getSimpleName()+ "." + methodName);
 		}
 		this.target = target;
 		this.method = method;
