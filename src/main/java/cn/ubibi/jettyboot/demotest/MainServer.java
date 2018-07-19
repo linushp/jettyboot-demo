@@ -2,6 +2,7 @@ package cn.ubibi.jettyboot.demotest;
 
 import cn.ubibi.jettyboot.demotest.controller.render.PageRender;
 import cn.ubibi.jettyboot.demotest.dao.base.MyConnectionFactory;
+import cn.ubibi.jettyboot.framework.commons.FrameworkConfig;
 import cn.ubibi.jettyboot.framework.rest.JettyBootServer;
 
 
@@ -21,6 +22,7 @@ public class MainServer {
 
 
         MyConnectionFactory.getInstance().init();
+        FrameworkConfig.getInstance().addConnectionFactory(MyConnectionFactory.getInstance());
         PageRender.init();
 
 

@@ -3,6 +3,7 @@ package cn.ubibi.jettyboot.demotest.dao;
 import cn.ubibi.jettyboot.demotest.dao.base.MyDAO;
 import cn.ubibi.jettyboot.demotest.entity.UserEntity;
 import cn.ubibi.jettyboot.framework.commons.StringUtils;
+import cn.ubibi.jettyboot.framework.jdbc.utils.Transactional;
 import cn.ubibi.jettyboot.framework.commons.model.Page;
 import cn.ubibi.jettyboot.framework.commons.xmlstring.XmlString;
 import cn.ubibi.jettyboot.framework.jdbc.utils.ResultSetParser;
@@ -61,6 +62,8 @@ public class UserDAO extends MyDAO<UserEntity> implements ResultSetParser<UserEn
     }
 
 
+
+    @Transactional
     public List<UserEntity> findByUsername(String username) throws Exception {
 
         TransactionUtil.beginTransaction(dataAccess.getConnectionFactory());
