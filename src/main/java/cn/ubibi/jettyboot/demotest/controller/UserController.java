@@ -66,15 +66,12 @@ public class UserController {
 
 
     @GetMapping("/hello22")
-    @AsyncMergeMethod
-    @CacheMethod
-    public String hello22() throws InterruptedException {
-        Thread.sleep(10000);
-        return "ok222";
+    @AsyncMergeMethod(paramKey = {0})
+    @CacheMethod(paramKey = {0})
+    public String hello22(@RequestParam("name") String name) throws InterruptedException {
+        Thread.sleep(3000);
+        return "ok:" + name;
     }
-
-
-
 
 
 
@@ -109,6 +106,14 @@ public class UserController {
     }
 
 
+    /**
+     * 考虑有一万个请求同时到达的场景，
+     * 缓存是空的，第一个请求会真正去执行里面的方法，剩下的所有请求的线程立即释放，只保持请求连接，
+     * 线程不会被占用。第一个请求执行的结果返回后，会把这个结果同时推给这一万个请求。同时放入缓存。
+     * @param name
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/test_insert2")
     @AsyncMergeMethod(paramKey = {0})
     @CacheMethod(paramKey = {0})
