@@ -37,26 +37,32 @@ public class UserController {
     @Autowired
     private UserDAO userDAO;
 
-
-
     @GetMapping("/hello11")
     public VoidResult hello11(HttpParsedRequest request,HttpServletResponse response){
 
-        AsyncContext aa = request.startAsync();
+        AsyncContext asyncContext = request.startAsync();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(2000);
 
-                    ResultRenderMisc.doRender("ok",request,response);
+                try {
+                    response.setHeader("Content-type", "text/html;charset=UTF-8");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write("hello__");
+                    response.getWriter().flush();
+                    while (true){
+                        Thread.sleep(1000);
+                        response.getWriter().write("hello__");
+                        response.getWriter().flush();
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                aa.complete();
+                asyncContext.complete();
+
             }
         }).start();
 
@@ -69,9 +75,10 @@ public class UserController {
     @AsyncMergeMethod(paramKey = {0})
     @CacheMethod(paramKey = {0})
     public String hello22(@RequestParam("name") String name) throws InterruptedException {
-        Thread.sleep(3000);
+        Thread.sleep(10000);
         return "ok:" + name;
     }
+
 
 
 
