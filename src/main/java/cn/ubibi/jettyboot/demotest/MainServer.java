@@ -43,23 +43,19 @@ public class MainServer {
 
 
         JettyBootServer server = new JettyBootServer(8001);
-
-        server.setControllerContext("/");
         server.setServerName("MainServer");
         server.addBean(new NullSessionCacheFactory());
         server.addBean(getJDBCSessionDataStoreFactory());
 
-        server.doScanPackage(MainServer.class);
+        server.doScanPackage("/", MainServer.class);
 
 
         ServerConnector connector = new ServerConnector(server);
         connector.setAcceptQueueSize(100);
         connector.setPort(8001);
-        server.setConnectors(new Connector[] { connector });
+        server.setConnectors(new Connector[]{connector});
         server.startAndJoin();
     }
-
-
 
 
     private static JDBCSessionDataStoreFactory getJDBCSessionDataStoreFactory() {
