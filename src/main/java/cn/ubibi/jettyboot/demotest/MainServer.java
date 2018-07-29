@@ -37,6 +37,7 @@ public class MainServer {
     public static void main(String[] args) throws Exception {
 
 
+
         MyConnectionFactory.getInstance().init();
         FrameworkConfig.getInstance().addConnectionFactory(MyConnectionFactory.getInstance());
         PageRender.init();
