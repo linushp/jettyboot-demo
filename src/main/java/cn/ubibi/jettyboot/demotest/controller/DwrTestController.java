@@ -5,25 +5,25 @@ import cn.ubibi.jettyboot.demotest.dao.UserDAO;
 import cn.ubibi.jettyboot.demotest.entity.UserEntity;
 import cn.ubibi.jettyboot.demotest.entity.UserExternData;
 import cn.ubibi.jettyboot.framework.ioc.Autowired;
-import cn.ubibi.jettyboot.framework.rest.annotation.DwrController;
-import cn.ubibi.jettyboot.framework.rest.annotation.DwrFunction;
+import cn.ubibi.jettyboot.framework.rest.annotation.RpcController;
+import cn.ubibi.jettyboot.framework.rest.annotation.RpcFunction;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.*;
 
-@DwrController
+@RpcController
 public class DwrTestController {
 
     @Autowired
     private UserDAO userDAO;
 
-    @DwrFunction
+    @RpcFunction
     public UserEntity findById(int id) throws Exception {
         return userDAO.findById(id);
     }
 
 
-    @DwrFunction
+    @RpcFunction
     public int add(int [][] arr) {
         int result = 0;
         for (int i = 0 ; i < arr.length ; i++){
@@ -36,24 +36,24 @@ public class DwrTestController {
         return result;
     }
 
-    @DwrFunction
+   @RpcFunction
     public int minus(Integer a, char b) {
         return a - b;
     }
 
 
-    @DwrFunction
+   @RpcFunction
     public int multiply(int a, int b) {
         return a * b;
     }
 
-    @DwrFunction
+   @RpcFunction
     public int divide(int a, int b) {
         return a / b;
     }
 
 
-    @DwrFunction
+   @RpcFunction
     public int testMap(Map<String,Map<String,Queue<Integer>>> map, JSONObject jsonObject, Set<Integer> integers){
         Map<String, Queue<Integer>> a = map.get("a");
         Queue<Integer> m = a.get("m");
@@ -61,7 +61,7 @@ public class DwrTestController {
         return map.size() + jsonObject.size() + integers.size();
     }
 
-    @DwrFunction
+   @RpcFunction
     public int testJavaObject(List dd){
         return dd.size();
     }

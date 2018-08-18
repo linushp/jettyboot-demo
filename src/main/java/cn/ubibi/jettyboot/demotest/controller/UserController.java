@@ -208,14 +208,14 @@ public class UserController {
     }
 
 
-    @DwrFunction
+    @RpcFunction
     public String getUserInfoById(Object a, Integer b, @AspectVariable CurrentUser currentUser) {
         // UserController.getUserInfoById(123);
         return "getUserInfoById:  " + (a.toString() + b);
     }
 
 
-    @DwrFunction
+    @RpcFunction
     public String getUserInfoByName(String name, @AspectVariable CurrentUser currentUser) {
         // UserController.getUserInfoById(123);
         return "getUserInfoByName:  " + name;
