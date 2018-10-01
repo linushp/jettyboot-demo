@@ -14,7 +14,7 @@
         <dependency>
             <groupId>com.github.luanhaipeng</groupId>
             <artifactId>jettyboot</artifactId>
-            <version>1.0.47</version>
+            <version>1.0.50</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
@@ -53,7 +53,12 @@
         </dependency>
 
 
-
+        <!--compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
 
 
 

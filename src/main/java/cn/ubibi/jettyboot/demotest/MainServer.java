@@ -4,9 +4,7 @@ import cn.ubibi.jettyboot.demotest.controller.render.PageRender;
 import cn.ubibi.jettyboot.demotest.core.AsyncContextTaskManager;
 import cn.ubibi.jettyboot.demotest.core.MethodInvokeCallable;
 import cn.ubibi.jettyboot.demotest.dao.base.MyConnectionFactory;
-import cn.ubibi.jettyboot.demotest.service.TestService;
-import cn.ubibi.jettyboot.framework.commons.FrameworkConfig;
-import cn.ubibi.jettyboot.framework.rest.JettyBootServer;
+
 
 
 import org.eclipse.jetty.server.Connector;
@@ -35,27 +33,27 @@ public class MainServer {
 
 
     public static void main(String[] args) throws Exception {
-
-
-
-        MyConnectionFactory.getInstance().init();
-        FrameworkConfig.getInstance().addConnectionFactory(MyConnectionFactory.getInstance());
-        PageRender.init();
-
-
-        JettyBootServer server = new JettyBootServer(8001);
-        server.setServerName("MainServer");
-        server.addBean(new NullSessionCacheFactory());
-        server.addBean(getJDBCSessionDataStoreFactory());
-
-        server.doScanPackage("/", MainServer.class);
-
-
-        ServerConnector connector = new ServerConnector(server);
-        connector.setAcceptQueueSize(100);
-        connector.setPort(8001);
-        server.setConnectors(new Connector[]{connector});
-        server.startAndJoin();
+//
+//
+//
+//        MyConnectionFactory.getInstance().init();
+////        FrameworkConfig.getInstance().addConnectionFactory(MyConnectionFactory.getInstance());
+//        PageRender.init();
+//
+//
+//        JettyBootServer server = new JettyBootServer(8001);
+//        server.setServerName("MainServer");
+//        server.addBean(new NullSessionCacheFactory());
+//        server.addBean(getJDBCSessionDataStoreFactory());
+//
+//        server.doScanPackage("/", MainServer.class);
+//
+//
+//        ServerConnector connector = new ServerConnector(server);
+//        connector.setAcceptQueueSize(100);
+//        connector.setPort(8001);
+//        server.setConnectors(new Connector[]{connector});
+//        server.startAndJoin();
     }
 
 
